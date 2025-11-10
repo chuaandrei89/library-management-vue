@@ -1,5 +1,9 @@
 <template>
+<<<<<<< HEAD
   <div class="login-page">
+=======
+  <div class="login-container">
+>>>>>>> ac17001 (For collaboration purposes)
     <div class="logo" aria-label="Logo">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
         <path d="M2 6.75A3 3 0 0 1 5 4h3a7 7 0 0 1 7 7v7a3 3 0 0 1-3 3h-3a7 7 0 0 1-7-7V6.75z" />
@@ -10,6 +14,7 @@
     <h1>Welcome!</h1>
     <p class="subtitle">Sign in to continue!</p>
 
+<<<<<<< HEAD
     <button class="masao-btn" type="button" aria-label="Log in with MasaoLMS">
       <img src="@/assets/images/masaologo.png" alt="MasaoLMS logo" />
       Log in with MasaoLMS
@@ -42,6 +47,28 @@
         </button>
       </div>
       <p class="error-msg" ref="errorMsg" style="display: none">Password is not valid!</p>
+=======
+    <button class="masao-btn" type="button" @click="loginWithMasao">
+      <img src="@/assets/masaologo.png" alt="MasaoLMS logo" />
+      Log in with MasaoLMS
+    </button>
+
+    <div class="separator-line"></div>
+    <div class="separator">or</div>
+
+    <form @submit.prevent="validateForm">
+      <input type="text" placeholder="Username" v-model="username" required />
+      <div class="password-wrapper">
+        <input
+          :type="showPassword ? 'text' : 'password'"
+          placeholder="Password"
+          v-model="password"
+          required
+        />
+        <button type="button" class="show-password-btn" @click="togglePassword">👁️</button>
+      </div>
+      <p v-if="error" class="error-msg">Password is not valid!</p>
+>>>>>>> ac17001 (For collaboration purposes)
       <button type="submit" class="login-btn">Log in</button>
     </form>
 
@@ -54,6 +81,7 @@
     </div>
   </div>
 </template>
+<<<<<<< HEAD
 
 <script>
 export default {
@@ -220,3 +248,5 @@ export default {
       }
 
 </style>
+=======
+>>>>>>> ac17001 (For collaboration purposes)

@@ -1,13 +1,18 @@
+<<<<<<< HEAD
 import Login from '@/views/Login.vue';
 import Onboarding1 from '@/views/Onboarding1.vue';
 import Onboarding2 from '@/views/Onboarding2.vue';
 import Onboarding3 from '@/views/Onboarding3.vue';
 import { createRouter, createWebHistory } from 'vue-router';
 
+=======
+import LoginPage from '@/views/LoginPage.vue'
+>>>>>>> ac17001 (For collaboration purposes)
 
 const routes = [
   {
     path: '/',
+<<<<<<< HEAD
     name: 'Onboarding1',
     component: Onboarding1,
   },
@@ -39,3 +44,9 @@ const router = createRouter({
 })
 
 export default router
+=======
+    name: 'Login',
+    component: LoginPage,
+  },
+]
+>>>>>>> ac17001 (For collaboration purposes)
