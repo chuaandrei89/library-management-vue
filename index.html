@@ -1,11 +1,291 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vue Login App</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Login App</title>
+    <style>
+      /* Paste the exact same styles from above inside here */
+      body {
+        font-family: Arial, sans-serif;
+        background: #fff;
+        margin: 0;
+        padding: 20px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+      }
+      .login-wrapper {
+        max-width: 320px;
+        margin: auto;
+        text-align: center;
+        color: #000;
+      }
+      .logo {
+        width: 32px;
+        height: 32px;
+        margin-bottom: 16px;
+      }
+      h2 {
+        font-weight: 700;
+        font-size: 20px;
+        margin-bottom: 6px;
+      }
+      .subtitle {
+        font-weight: 500;
+        font-size: 14px;
+        margin-bottom: 30px;
+      }
+      .msalms-btn {
+        background-color: #d0d0d0;
+        border: none;
+        border-radius: 6px;
+        padding: 10px;
+        width: 100%;
+        font-size: 14px;
+        font-weight: 600;
+        color: #000;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        margin-bottom: 30px;
+      }
+      .msalms-logo {
+        width: 20px;
+        height: 20px;
+      }
+      .separator {
+        margin-bottom: 30px;
+        font-weight: 500;
+        font-size: 14px;
+        color: gray;
+      }
+      .input-field {
+        width: 100%;
+        padding: 10px 12px;
+        font-size: 14px;
+        border: 1px solid #ccc;
+        border-radius: 6px;
+        box-sizing: border-box;
+        margin-bottom: 12px;
+        outline: none;
+      }
+      .input-field::placeholder {
+        color: #aaa;
+      }
+      .password-container {
+        position: relative;
+        display: flex;
+        align-items: center;
+      }
+      .password-input {
+        flex-grow: 1;
+        margin-bottom: 0;
+      }
+      .eye-btn {
+        position: absolute;
+        right: 10px;
+        background: transparent;
+        border: none;
+        cursor: pointer;
+        padding: 0;
+      }
+      .error-text {
+        color: #c0392b;
+        font-size: 12px;
+        margin: 6px 0 12px 0;
+        text-align: left;
+      }
+      .login-btn {
+        background-color: #27ae60;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        padding: 12px 0;
+        width: 100%;
+        font-weight: 600;
+        font-size: 16px;
+        cursor: pointer;
+        margin-top: 6px;
+      }
+      .bottom-text {
+        margin: 20px 0 4px 0;
+        font-size: 12px;
+        color: #27ae60;
+        font-weight: 600;
+      }
+      .forgot-link {
+        color: #27ae60;
+        text-decoration: none;
+        cursor: pointer;
+      }
+      .forgot-link:hover {
+        text-decoration: underline;
+      }
+      .signup-text {
+        font-size: 12px;
+        color: #27ae60;
+        font-weight: 500;
+      }
+      .signup-link {
+        color: #e94b42;
+        font-weight: 700;
+        cursor: pointer;
+        text-decoration: none;
+      }
+      .signup-link:hover {
+        text-decoration: underline;
+      }
+    </style>
   </head>
   <body>
     <div id="app"></div>
+
+    <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
+
+    <script>
+      const { createApp, ref } = Vue
+
+      createApp({
+        setup() {
+          const username = ref('')
+          const password = ref('')
+          const showPassword = ref(false)
+          const passwordError = ref(false)
+
+          const togglePasswordVisibility = () => {
+            showPassword.value = !showPassword.value
+          }
+
+          const validatePassword = (pass) => pass.length >= 6
+
+          const handleLogin = () => {
+            passwordError.value = !validatePassword(password.value)
+            if (!passwordError.value) {
+              alert(`Logged in as ${username.value}`)
+            }
+          }
+
+          const loginMasaoLMS = () => {
+            alert('Logging in with MasaoLMS...')
+          }
+
+          const forgotPassword = () => alert('Redirect to forgot password page')
+          const signUp = () => alert('Redirect to sign up page')
+
+          return {
+            username,
+            password,
+            showPassword,
+            passwordError,
+            togglePasswordVisibility,
+            handleLogin,
+            loginMasaoLMS,
+            forgotPassword,
+            signUp,
+          }
+        },
+        template: `
+      <div class="login-wrapper">
+        <img
+          src="https://upload.wikimedia.org/wikipedia/commons/4/45/Book_icon_green.svg"
+          alt="Logo"
+          class="logo"
+        />
+
+        <h2>Welcome!</h2>
+        <p class="subtitle">Sign in to continue!</p>
+
+        <button class="msalms-btn" @click="loginMasaoLMS">
+          <img
+            src="https://upload.wikimedia.org/wikipedia/en/thumb/4/4a/University_of_Green_logo.svg/120px-University_of_Green_logo.svg.png"
+            alt="MasaoLMS Logo"
+            class="msalms-logo"
+          />
+          Log in with MasaoLMS
+        </button>
+
+        <div class="separator">or</div>
+
+        <form @submit.prevent="handleLogin" class="login-form">
+          <input
+            v-model="username"
+            type="text"
+            placeholder="Username"
+            class="input-field"
+            required
+          />
+
+          <div class="password-container">
+            <input
+              v-model="password"
+              :type="showPassword ? 'text' : 'password'"
+              placeholder="Password"
+              class="input-field password-input"
+              required
+            />
+            <button
+              type="button"
+              class="eye-btn"
+              @click="togglePasswordVisibility"
+              :aria-label="showPassword ? 'Hide password' : 'Show password'"
+            >
+              <svg
+                v-if="showPassword"
+                xmlns="http://www.w3.org/2000/svg"
+                width="20"
+                height="20"
+                fill="grey"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  d="M12 5c-7 0-10 7-10 7s3 7 10 7 10-7 10-7-3-7-10-7zm0 12a5 5 0 110-10 5 5 0 010 10z"
+                  stroke="grey"
+                  stroke-width="2"
+                  fill="none"
+                />
+                <circle cx="12" cy="12" r="2" fill="grey" />
+              </svg>
+
+              <svg
+                v-else
+                xmlns="http://www.w3.org/2000/svg"
+                width="20"
+                height="20"
+                fill="grey"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  d="M12 5c-7 0-10 7-10 7 1.5 3 4.4 6 10 6 1.1 0 2.15-.2 3.15-.6M2 2l20 20"
+                  stroke="grey"
+                  stroke-width="2"
+                  fill="none"
+                />
+              </svg>
+            </button>
+          </div>
+
+          <p v-if="passwordError" class="error-text">Password is not valid!</p>
+
+          <button type="submit" class="login-btn">Log in</button>
+        </form>
+
+        <p class="bottom-text">
+          <a href="#" @click.prevent="forgotPassword" class="forgot-link"
+            >Forget password?</a
+          >
+        </p>
+
+        <p class="signup-text">
+          Don’t have an account?
+          <a href="#" @click.prevent="signUp" class="signup-link">Sign up</a>
+        </p>
+      </div>
+      `,
+      }).mount('#app')
+    </script>
   </body>
 </html>
