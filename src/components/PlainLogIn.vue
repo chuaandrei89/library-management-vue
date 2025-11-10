@@ -16,7 +16,6 @@
 
     <div class="separator"><span>or</span></div>
 
-    <router-view />
     <!-- Login Form -->
     <form @submit.prevent="submitLogin" class="login-form">
       <input
@@ -42,7 +41,8 @@
 
     <!-- Footer Links -->
     <div class="footer-links">
-      <router-link to="/forgot" class="forg et-password">Forget password?</router-link>
+      <router-link to="/forgot" class="forget-password">Forgot password?</router-link>
+      <!-- Fixed: Typo -->
       <p class="signup-text">
         Don’t have an account?
         <router-link to="/signup" class="sign-up">Sign up</router-link>
@@ -77,8 +77,7 @@ export default {
       } else {
         this.passwordError = false
         alert(`Logging in as ${this.username}`)
-        // Navigate to another route if you want:
-        // this.$router.push('/home')
+        // Navigate, e.g., this.$router.push({ name: 'Home' })
       }
     },
   },
@@ -86,6 +85,7 @@ export default {
 </script>
 
 <style scoped>
+/* Converted from original HTML styles, scoped for Vue */
 .app-container {
   max-width: 360px;
   margin: auto;

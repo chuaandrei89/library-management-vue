@@ -9,8 +9,8 @@
 
     <!-- Main content -->
     <div class="content">
-      <img src="@/assets/images/onboarding3.png" alt="Start Reading" class="onboard-image">
-      <h1>You're All Set!<br>journey today!</h1>
+      <img src="@/assets/images/onboarding3.png" alt="Start Reading" class="onboard-image" />
+      <h1>You're All Set!<br />journey today!</h1>
       <p>Get ready to explore and make the most out of your experience.</p>
     </div>
 
@@ -50,9 +50,9 @@ export default {
   },
   methods: {
     goToHomePage() {
-      this.$router.push('/login');  // Changed from '/home' to '/login'
-    }
-  }
+      this.$router.push('/login') // Changed from '/home' to '/login'
+    },
+  },
 }
 </script>
 <style scoped src="@/assets/onboarding.css"></style>
