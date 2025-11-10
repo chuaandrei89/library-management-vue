@@ -1,80 +1,97 @@
 <template>
-  <div class="container">
-    <img
-      src="https://upload.wikimedia.org/wikipedia/commons/4/45/Book_icon_green.svg"
-      alt="Logo"
-      class="logo"
-    />
-    <h2 class="welcome-text">Welcome!<br />Sign in to continue!</h2>
+  <div class="app-container">
+    <div class="logo">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="40"
+        height="40"
+        viewBox="0 0 24 24"
+        fill="#496b33"
+      >
+        <path d="M2 6.75A3 3 0 0 1 5 4h3a7 7 0 0 1 7 7v7a3 3 0 0 1-3 3h-3a7 7 0 0 1-7-7V6.75z" />
+        <path d="M15 8h4.5a1.5 1.5 0 0 1 0 3H15v-3zM15 14h3.25a1.75 1.75 0 0 1 0 3.5H15v-3.5z" />
+      </svg>
+    </div>
 
-    <button class="msalms-btn" @click="loginMasaoLMS">
-      <img src="./assets/masaologo.png" alt="MasaoLMS Logo" class="msalms-logo" />
+    <h1>Welcome!</h1>
+    <p class="subtitle">Sign in to continue!</p>
+
+    <button class="masao-btn" @click="loginWithMasao">
+      <img
+        class="masao-logo"
+        src="https://upload.wikimedia.org/wikipedia/en/thumb/6/60/Maseno_University_Logo.png/220px-Maseno_University_Logo.png"
+        alt="MasaoLMS logo"
+      />
       Log in with MasaoLMS
     </button>
 
-    <div class="separator">or</div>
+    <div class="separator">
+      <span>or</span>
+    </div>
 
-    <form @submit.prevent="handleLogin" class="login-form" novalidate>
-      <input v-model="username" type="text" placeholder="Username" class="input" required />
-
-      <div class="password-wrapper">
+    <form @submit.prevent="submitLogin" class="login-form">
+      <input
+        type="text"
+        placeholder="Username"
+        v-model="username"
+        required
+        autocomplete="username"
+      />
+      <div class="password-input">
         <input
-          v-model="password"
           :type="showPassword ? 'text' : 'password'"
           placeholder="Password"
-          class="input password-input"
+          v-model="password"
           required
-          autocomplete="off"
+          autocomplete="current-password"
         />
-        <button
-          type="button"
-          class="eye-btn"
-          @click="togglePasswordVisibility"
-          :aria-label="showPassword ? 'Hide password' : 'Show password'"
-          tabindex="-1"
-        >
+        <button type="button" class="toggle-password" @click="togglePassword">
           <svg
             v-if="showPassword"
             xmlns="http://www.w3.org/2000/svg"
-            height="18"
-            width="18"
+            fill="none"
             viewBox="0 0 24 24"
-            fill="#6c757d"
+            stroke="currentColor"
+            width="20"
+            height="20"
           >
             <path
-              d="M12 5c-7 0-10 7-10 7s3 7 10 7 10-7 10-7-3-7-10-7zm0 12a5 5 0 11.001-10.001A5 5 0 0112 17z"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M13.875 18.825A10.05 10.05 0 0112 19.5c-5 0-9-4.5-9-4.5a17.91 17.91 0 014.243-4.243m3.755-2.792a3 3 0 104.243 4.243"
             />
-            <circle cx="12" cy="12" r="2.5" fill="#6c757d" />
           </svg>
           <svg
             v-else
             xmlns="http://www.w3.org/2000/svg"
-            height="18"
-            width="18"
+            fill="none"
             viewBox="0 0 24 24"
-            fill="#6c757d"
+            stroke="currentColor"
+            width="20"
+            height="20"
           >
             <path
-              d="M12 5c-7 0-10 7-10 7 1.5 3 4.4 6 10 6 1.1 0 2.15-.2 3.15-.6M2 2l20 20"
-              stroke="#6c757d"
+              stroke-linecap="round"
+              stroke-linejoin="round"
               stroke-width="2"
-              fill="none"
+              d="M3 3l18 18M9.88 9.88a3 3 0 013.374 3.374M12 19.5c5 0 9-4.5 9-4.5a17.927 17.927 0 00-2.415-2.8M14.121 14.12L3 3"
             />
           </svg>
         </button>
       </div>
+      <p v-if="passwordError" class="error-msg">Password is not valid!</p>
 
-      <p v-if="passwordError" class="error-text">Password is not valid!</p>
-
-      <button type="submit" class="login-btn">Log in</button>
+      <button class="login-btn" type="submit">Log in</button>
     </form>
 
-    <a href="#" class="forgot-link" @click.prevent="forgotPassword">Forget password?</a>
-
-    <p class="signup-text">
-      Don’t have an account?
-      <a href="#" class="signup-link" @click.prevent="signUp">Sign up</a>
-    </p>
+    <div class="footer-links">
+      <a href="#" class="forget-password">Forget password?</a>
+      <p class="signup-text">
+        Don’t have an account?
+        <a href="#" class="sign-up">Sign up</a>
+      </p>
+    </div>
   </div>
 </template>
 
@@ -89,184 +106,192 @@ export default {
     }
   },
   methods: {
-    togglePasswordVisibility() {
+    loginWithMasao() {
+      alert('Log in with MasaoLMS clicked')
+      // Implement actual login logic here
+    },
+    togglePassword() {
       this.showPassword = !this.showPassword
     },
-    validatePassword(password) {
-      return password.length >= 6 // Adjust validation as needed
-    },
-    handleLogin() {
-      this.passwordError = !this.validatePassword(this.password)
-      if (!this.passwordError) {
-        alert(`Logged in as ${this.username}`)
+    submitLogin() {
+      // Simple validation example: password must be at least 6 characters
+      if (this.password.length < 6) {
+        this.passwordError = true
+      } else {
+        this.passwordError = false
+        alert(`Logging in as ${this.username}`)
+        // Implement login submission logic here
       }
-    },
-    loginMasaoLMS() {
-      alert('Logging in with MasaoLMS...')
-    },
-    forgotPassword() {
-      alert('Redirect to forgot password page')
-    },
-    signUp() {
-      alert('Redirect to sign up page')
     },
   },
 }
 </script>
 
 <style scoped>
-.container {
-  background: #fff;
-  max-width: 320px;
-  margin: 50px auto;
+.app-container {
+  max-width: 360px;
+  margin: auto;
+  padding: 2rem 1rem;
+  font-family:
+    -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans',
+    'Helvetica Neue', sans-serif;
+  color: #0a0a0a;
   text-align: center;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  padding: 30px 20px;
-  box-sizing: border-box;
-  border-radius: 8px;
-  box-shadow: 0 0 5px rgb(0 0 0 / 0.1);
 }
 
 .logo {
-  height: 32px;
-  margin-bottom: 24px;
+  margin-bottom: 1rem;
+  display: flex;
+  justify-content: center;
 }
 
-.welcome-text {
-  font-weight: 700;
-  font-size: 18px;
-  line-height: 1.3;
-  margin-bottom: 32px;
-  color: #000;
+h1 {
+  margin: 0;
+  font-weight: 900;
 }
 
-.msalms-btn {
+.subtitle {
+  margin: 0.25rem 0 2rem 0;
+  font-weight: 600;
+  font-size: 1.1rem;
+}
+
+.masao-btn {
   width: 100%;
-  padding: 12px;
-  background-color: #d1d1d1;
+  background-color: #ccc;
   border: none;
   border-radius: 6px;
-  font-weight: 500;
-  font-size: 14px;
+  padding: 10px 0;
+  font-size: 1.1rem;
   color: #000;
+  font-weight: 600;
   display: flex;
-  align-items: center;
   justify-content: center;
+  align-items: center;
   gap: 10px;
-  margin-bottom: 32px;
   cursor: pointer;
+  margin-bottom: 1.5rem;
   user-select: none;
 }
 
-.msalms-logo {
-  height: 20px;
-  width: 20px;
+.masao-logo {
+  width: 100px;
+  height: 100px;
   object-fit: contain;
 }
 
 .separator {
-  font-weight: normal;
-  font-size: 13px;
-  color: #9b9b9b;
-  margin-bottom: 24px;
+  margin: 0 0 1.25rem 0;
+  font-weight: 600;
+  font-size: 1rem;
+  color: #888;
+  user-select: none;
+}
+
+.separator span {
+  background-color: white;
+  padding: 0 0.75rem;
+  position: relative;
+  top: -0.6rem;
+}
+
+.separator::before {
+  content: '';
+  display: block;
+  height: 1px;
+  background-color: #ccc;
+  position: relative;
+  top: 0.5rem;
+  width: 100%;
 }
 
 .login-form {
-  width: 100%;
-  text-align: left;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
 }
 
-.input {
-  display: block;
+input[type='text'],
+input[type='password'] {
+  border: 1px solid #888;
+  border-radius: 10px;
+  padding: 0.8rem 1rem;
+  font-size: 1rem;
+  outline: none;
   width: 100%;
-  padding: 10px 12px;
-  margin-bottom: 8px;
-  border-radius: 6px;
-  border: 1px solid #ccc;
-  font-size: 14px;
   box-sizing: border-box;
-  outline-offset: 2px;
-  outline-color: #27ae60;
-  transition: border-color 0.25s ease;
-}
-
-.input:focus {
-  border-color: #27ae60;
-}
-
-.password-wrapper {
-  position: relative;
 }
 
 .password-input {
-  padding-right: 40px;
+  position: relative;
+  width: 100%;
 }
 
-.eye-btn {
+.toggle-password {
   position: absolute;
-  right: 10px;
+  right: 14px;
   top: 50%;
   transform: translateY(-50%);
-  background: transparent;
+  background: none;
   border: none;
-  padding: 0;
+  outline: none;
   cursor: pointer;
+  padding: 0;
+  color: #888;
 }
 
-.error-text {
-  font-size: 12px;
-  color: #cc0000;
-  margin: 0 0 12px 4px;
+.error-msg {
+  color: #ab1f1f;
+  font-size: 0.9rem;
+  margin: -0.75rem 0 0 0;
+  text-align: left;
   font-weight: 600;
 }
 
 .login-btn {
-  width: 100%;
-  background-color: #27ae60;
+  background-color: #496b33;
   border: none;
-  padding: 14px 0;
-  border-radius: 20px;
-  font-size: 16px;
-  font-weight: 700;
-  color: #fff;
+  border-radius: 15px;
+  padding: 15px 0;
+  font-size: 1.2rem;
+  color: white;
+  font-weight: bold;
   cursor: pointer;
   user-select: none;
-  transition: background-color 0.3s ease;
+  margin-top: 1rem;
 }
 
-.login-btn:hover {
-  background-color: #219647;
-}
-
-.forgot-link {
-  display: block;
-  margin: 18px 0 6px;
+.footer-links {
+  margin-top: 2rem;
+  font-size: 0.9rem;
+  color: #496b33;
   font-weight: 600;
-  font-size: 13px;
-  color: #27ae60;
-  cursor: pointer;
+}
+
+.forget-password {
+  display: inline-block;
+  margin-bottom: 0.5rem;
+  color: #496b33;
   text-decoration: none;
 }
 
-.forgot-link:hover {
+.forget-password:hover {
   text-decoration: underline;
 }
 
 .signup-text {
-  font-size: 13px;
   font-weight: 400;
-  color: #27ae60;
+  color: #496b33;
 }
 
-.signup-link {
-  color: #cc0000;
+.sign-up {
+  color: #ab1f1f;
   font-weight: 700;
-  cursor: pointer;
   text-decoration: none;
-  margin-left: 3px;
+  cursor: pointer;
 }
 
-.signup-link:hover {
+.sign-up:hover {
   text-decoration: underline;
 }
 </style>
