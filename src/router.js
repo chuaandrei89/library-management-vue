@@ -10,7 +10,13 @@ import Onboarding3 from "./views/Onboarding3.vue";
 import SignUp from "./views/SignUp.vue";
 
 const routes = [
-  { path: "/", name: "Home", component: Home, meta: { requiresAuth: true } },
+  { path: "/", name: "Onboarding1", component: Onboarding1 }, // Changed from Home to Onboarding1
+  {
+    path: "/home",
+    name: "Home",
+    component: Home,
+    meta: { requiresAuth: true },
+  }, // Home moved to /home
   { path: "/login", name: "Login", component: LogIn, meta: { authPage: true } },
   {
     path: "/signup",
@@ -50,9 +56,20 @@ router.beforeEach((to, _from, next) => {
   const isAuthenticated = localStorage.getItem("isAuthenticated") === "true";
   const currentOnboard = localStorage.getItem("currentOnboard");
 
-  if (to.meta.requiresAuth && !isAuthenticated) {
+  // Redirect root path to onboarding if not authenticated
+  if (to.path === "/" && !isAuthenticated) {
     next({ name: "Onboarding1" });
-  } else if (to.meta.authPage && !isAuthenticated) {
+  }
+  // If user is authenticated and tries to go to root, redirect to home
+  else if (to.path === "/" && isAuthenticated) {
+    next({ name: "Home" });
+  }
+  // If user tries to access protected routes without auth, redirect to onboarding
+  else if (to.meta.requiresAuth && !isAuthenticated) {
+    next({ name: "Onboarding1" });
+  }
+  // Your existing auth page logic
+  else if (to.meta.authPage && !isAuthenticated) {
     if (currentOnboard == "1") {
       next({ name: "Onboarding2" });
     } else if (currentOnboard == "2") {

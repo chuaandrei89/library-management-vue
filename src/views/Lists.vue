@@ -1,338 +1,342 @@
 <template>
-  <div class="container" role="main">
-    <header>
-      <h1>Returned Books</h1>
-      <div class="header-info">
-        <div class="total-books">Total Books Borrowed: 10</div>
-        <div class="semester">Semester</div>
-      </div>
-
+  <div class="lists-page">
+    <!-- Top Bar -->
+    <header class="top-bar">
+      <h1 class="title">Returned Books</h1>
+      <button aria-label="Notifications" class="notification-btn" type="button" @click="onNotificationClick">
+        <svg class="bell-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6 6 0 10-12 0v3.159c0 .538-.214 1.055-.595 1.436L4 17h5" />
+          <path d="M13.73 21a2 2 0 01-3.46 0" />
+        </svg>
+        <span class="notification-badge" aria-hidden="true">1</span>
+      </button>
+      <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     </header>
 
-    <div class="content-section">
-      <h2 class="section-title">Computer Science</h2>
-      <ul class="category-list">
-        <li>History & Culture</li>
-        <li>Mathematics</li>
-        <li>Arts & Culture</li>
-        <li>Artificial Intelligence</li>
-        <li>Physics</li>
-        <li>Literature</li>
-        <li>Home</li>
-        <li>Genres</li>
-        <li>Booking</li>
-        <li>Lists</li>
-        <li>Profile</li>
-      </ul>
-    </div>
+    <!-- Info Bar -->
+    <section class="info-bar">
+      <span class="total-borrowed">Total Books Borrowed: <strong>10</strong></span>
+      <select class="semester-select" aria-label="Select semester" v-model="selectedSemester">
+        <option value="1">Semester 1</option>
+        <option value="2">Semester 2</option>
+        <option value="3">Semester 3</option>
+      </select>
+    </section>
 
-    <div class="book-codes-section">
-      <div class="book-codes-grid">
-        <div class="book-code-item">TL 2301</div>
-        <div class="book-code-item">F6 2327</div>
-        <div class="book-code-item">MD 2328</div>
-        <div class="book-code-item">NL 2395</div>
-        <div class="book-code-item">TL 3467</div>
-        <div class="book-code-item">RQ 3897</div>
+    <!-- Books List Container -->
+    <main class="books-list-container" role="list">
+      <div
+        class="book-card"
+        v-for="(book, index) in books"
+        :key="index"
+        role="listitem"
+        tabindex="0"
+        :aria-label="`${book.category}, code ${book.code}, number ${book.number}`"
+      >
+        <span class="category-name">{{ book.category }}</span>
+        <span class="code-container" :aria-label="`Code ${book.code}, number ${book.number}`">
+          <span class="code">{{ book.code }}</span>
+          <span class="number">{{ book.number }}</span>
+        </span>
       </div>
-    </div>
-  </div>
+    </main>
 
-  <!-- Navigation Bar - Same as your Booking page -->
-  <nav aria-label="Primary navigation">
-    <button @click="$router.push('/')">
-      <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-        <path d="M3 9L12 2l9 7v11a1 1 0 01-1 1h-5v-6H9v6H4a1 1 0 01-1-1z" />
-      </svg>
-      <span>Home</span>
-    </button>
-    <button @click="$router.push('/genres')">
-      <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-        <path d="M3 4v16h18V4H3zm14 11h-4v-2h4v2zm0-4h-4V9h4v2zM7 15h4v-2H7v2zm0-4h4V9H7v2z" />
-      </svg>
-      <span>Genres</span>
-    </button>
-    <button @click="$router.push('/booking')">
-      <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-        <path d="M8 6h8v2H8zM8 10h8v2H8zM8 14h8v2H8z" />
-      </svg>
-      <span>Booking</span>
-    </button>
-    <button class="active" aria-current="page">
-      <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-        <path d="M4 6h16v2H4zM4 10h16v2H4zM4 14h16v2H4z" />
-      </svg>
-      <span>Lists</span>
-    </button>
-    <button @click="$router.push('/profile')">
-      <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-        <circle cx="12" cy="7" r="4" />
-        <path d="M6 21v-2a4 4 0 018 0v2" />
-      </svg>
-      <span>Profile</span>
-    </button>
-  </nav>
+    <!-- Bottom Navigation Bar -->
+    <nav class="bottom-nav" role="navigation" aria-label="Primary">
+      <button class="nav-btn" aria-label="Home" @click="navigate('home')" type="button">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" class="nav-icon">
+          <path d="M3 9L12 2l9 7v11a1 1 0 01-1 1h-5v-6H9v6H4a1 1 0 01-1-1z"/>
+        </svg>
+        <span>Home</span>
+      </button>
+      <button class="nav-btn" aria-label="Genres" @click="navigate('genres')" type="button">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" class="nav-icon">
+          <rect x="3" y="4" width="18" height="16" rx="2" ry="2"/>
+          <line x1="3" y1="10" x2="21" y2="10"/>
+          <line x1="7" y1="4" x2="7" y2="20"/>
+        </svg>
+        <span>Genres</span>
+      </button>
+      <button class="nav-btn" aria-label="Booking" @click="navigate('booking')" type="button">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" class="nav-icon">
+          <rect x="3" y="4" width="18" height="16" rx="2" ry="2"/>
+          <line x1="3" y1="10" x2="21" y2="10"/>
+          <line x1="8" y1="2" x2="8" y2="6"/>
+          <line x1="16" y1="2" x2="16" y2="6"/>
+        </svg>
+        <span>Booking</span>
+      </button>
+      <button class="nav-btn active" aria-current="page" aria-label="Lists" @click="navigate('lists')" type="button">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#5FA85F" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" class="nav-icon active-icon">
+          <path d="M8 6h8v2H8zM8 10h8v2H8zM8 14h8v2H8z" />
+        </svg>
+        <span class="active-label">Lists</span>
+      </button>
+      <button class="nav-btn" aria-label="Profile" @click="navigate('profile')" type="button">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" class="nav-icon">
+          <circle cx="12" cy="7" r="4" />
+          <path d="M5.5 21a6 6 0 0113 0" />
+        </svg>
+        <span>Profile</span>
+      </button>
+    </nav>
+  </div>
 </template>
 
 <script>
 export default {
-  name: 'Lists'
-}
+  name: "Lists",
+  data() {
+    return {
+      selectedSemester: "1",
+      books: [
+        { category: "Computer Science", code: "TL", number: "2301" },
+        { category: "History & Culture", code: "FG", number: "2327" },
+        { category: "Mathematics", code: "MD", number: "2328" },
+        { category: "Arts & Culture", code: "NL", number: "2395" },
+        { category: "Artifical Intelligence", code: "TL", number: "3467" },
+        { category: "Physics", code: "RQ", number: "3897" },
+        { category: "Literature", code: "BA", number: "3700" },
+      ],
+    };
+  },
+  methods: {
+  onNotificationClick() {
+    // You can implement your notification logic here
+  },
+  navigate(page) {
+    // Use Vue Router to navigate programmatically
+    this.$router.push(`/${page}`);
+  },
+},
+};
 </script>
 
 <style scoped>
 * {
   font-family: 'Poppins', sans-serif;
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
 }
 
-body {
+.lists-page {
   background: #fff;
-  color: #000;
-  line-height: 1.4;
-}
-
-/* Container */
-.container {
-  max-width: 100%;
+  max-width: 480px;
   margin: 0 auto;
-  padding: 0 16px 80px;
-  min-height: 100vh;
+  padding: 0 16px 70px;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+    Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  color: #000;
 }
 
-/* Header */
-header {
+.top-bar {
   display: flex;
-  flex-direction: column;
+  justify-content: center;
   align-items: center;
-  padding: 16px 0;
+  padding: 12px 0 8px;
   position: relative;
-  border-bottom: 1px solid #eee;
-  margin-bottom: 20px;
 }
 
-header h1 {
+.title {
   font-weight: 600;
-  font-size: clamp(18px, 5vw, 22px);
-  margin: 0 0 12px 0;
-  text-align: center;
+  font-size: 17px;
+  color: black;
+  margin: 0;
 }
 
-.header-info {
-  display: flex;
-  justify-content: space-between;
-  width: 100%;
-  align-items: center;
-}
-
-.total-books {
-  font-weight: 500;
-  font-size: 14px;
-}
-
-.semester {
-  background: #f0f0f0;
-  padding: 4px 12px;
-  border-radius: 20px;
-  font-size: 12px;
-  font-weight: 500;
-}
-
-
-/* Notification */
-.notification {
+.notification-btn {
   position: absolute;
   right: 0;
-  top: 50%;
-  transform: translateY(-50%);
+  top: 6px;
+  background: transparent;
+  border: none;
   cursor: pointer;
   padding: 8px;
+  color: black;
 }
 
-.notification svg {
+.bell-icon {
   width: 24px;
   height: 24px;
-  stroke: black;
-  fill: none;
-  stroke-width: 2;
 }
 
 .notification-badge {
   position: absolute;
-  top: 4px;
-  right: 4px;
+  top: 6px;
+  right: 6px;
   background: #ff3b30;
   color: white;
-  font-size: 10px;
-  font-weight: 600;
-  width: 16px;
-  height: 16px;
+  font-weight: 700;
+  font-size: 12px;
+  width: 17px;
+  height: 17px;
+  line-height: 17px;
   border-radius: 50%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-/* Content Section */
-.content-section {
-  margin-bottom: 24px;
-}
-
-.section-title {
-  font-size: 18px;
-  font-weight: 600;
-  margin-bottom: 16px;
-  color: #333;
-}
-
-.category-list {
-  list-style-type: none;
-}
-
-.category-list li {
-  padding: 10px 0;
-  font-weight: 600;
-  color: #333;
-  border-bottom: 1px solid #f0f0f0;
-}
-
-.category-list li:last-child {
-  border-bottom: none;
-}
-
-/* Book Codes Section */
-.book-codes-section {
-  margin-top: 24px;
-}
-
-.book-codes-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 12px;
-}
-
-.book-code-item {
-  background: #5FA85F;
-  color: white;
-  padding: 12px 16px;
-  border-radius: 12px;
-  font-weight: 600;
-  font-size: 14px;
   text-align: center;
-  box-shadow: 0 2px 8px rgba(95, 168, 95, 0.2);
+  pointer-events: none;
 }
 
-/* Navigation Bar - Same as your Booking page */
-nav {
+.info-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+  font-size: 13px;
+  font-weight: 500;
+  color: #000;
+}
+
+.total-borrowed {
+  user-select: none;
+}
+
+.semester-select {
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 13px;
+  padding: 4px 12px;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  cursor: pointer;
+  font-weight: 600;
+  color: #000;
+}
+
+.semester-select::-ms-expand {
+  display: none;
+}
+
+.books-list-container {
+  background-color: #184900;
+  border-radius: 24px 24px 0 0;
+  max-height: 70vh;
+  overflow-y: auto;
+  padding: 24px 16px 32px;
+}
+
+/* Scrollbar small and subtle */
+.books-list-container::-webkit-scrollbar {
+  width: 5px;
+}
+.books-list-container::-webkit-scrollbar-track {
+  background: transparent;
+}
+.books-list-container::-webkit-scrollbar-thumb {
+  background-color: rgba(255, 255, 255, 0.2);
+  border-radius: 10px;
+}
+
+.book-card {
+  background: #fff;
+  border-radius: 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 18px 24px 18px 26px;
+  margin-bottom: 16px;
+  font-weight: 600;
+  font-size: 16px;
+  user-select: none;
+  cursor: default;
+  box-shadow: 0 4px 9px rgb(0 0 0 / 0.07);
+}
+
+.category-name {
+  max-width: 75%;
+  color: black;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.code-container {
+  background: #fff;
+  border: 1px solid #dbdbdb;
+  border-radius: 20px 24px 24px 20px;
+  min-width: 75px;
+  padding: 8px 14px 8px 12px;
+  text-align: right;
+  display: flex;
+  flex-direction: column;
+  user-select: none;
+  justify-content: center;
+  color: #5E5E5E;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.code {
+  color: black;
+  font-weight: 700;
+  font-size: 13px;
+  line-height: 1.1;
+  margin-bottom: 2px;
+}
+
+.number {
+  font-weight: 500;
+  font-size: 12px;
+  color: #7c7c7c;
+}
+
+.bottom-nav {
   position: fixed;
   bottom: 0;
-  left: 0;
-  right: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  max-width: 480px;
+  width: 100%;
   background: #fff;
-  border-top: 1px solid #e0e0e0;
+  border-top: 1px solid #ccc;
   display: flex;
   justify-content: space-around;
-  padding: 8px 0 16px;
-  box-shadow: 0 -2px 12px rgba(0, 0, 0, 0.08);
-  z-index: 1000;
-  backdrop-filter: blur(10px);
+  padding: 8px 0 14px;
+  box-shadow: 0 -1px 10px rgb(0 0 0 / 0.04);
+  z-index: 10;
 }
 
-nav button {
+.nav-btn {
   background: none;
   border: none;
-  font-size: clamp(10px, 2.5vw, 11px);
-  color: #666;
+  color: #333;
+  font-size: 11px;
   display: flex;
   flex-direction: column;
   align-items: center;
+  gap: 5px;
   cursor: pointer;
   font-weight: 500;
-  gap: 4px;
-  flex: 1;
-  padding: 4px;
-  transition: color 0.2s ease;
-  min-width: 0;
+  user-select: none;
+  padding: 0;
+  width: 56px;
 }
 
-nav button.active {
-  color: #5FA85F;
-  font-weight: 600;
+.nav-btn:focus {
+  outline: 2px solid #5FA85F;
+  outline-offset: 2px;
 }
 
-nav button svg {
-  width: 24px;
-  height: 24px;
-  stroke: currentColor;
+.nav-btn .nav-icon {
+  width: 22px;
+  height: 22px;
   stroke-width: 2;
+  stroke: currentColor;
   fill: none;
 }
 
-/* Responsive Design */
-@media (max-width: 480px) {
-  .container {
-    padding: 0 12px 80px;
-  }
-
-  .book-codes-grid {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 10px;
-  }
-
-  .book-code-item {
-    padding: 10px 12px;
-    font-size: 13px;
-  }
-
-  nav {
-    padding: 6px 0 14px;
-  }
-
-  nav button svg {
-    width: 22px;
-    height: 22px;
-  }
+.nav-btn.active,
+.nav-btn.active span,
+.nav-btn.active .active-icon {
+  color: #5FA85F;
+  font-weight: 700;
 }
 
-@media (max-width: 360px) {
-  .container {
-    padding: 0 8px 80px;
-  }
-
-  .book-codes-grid {
-    grid-template-columns: 1fr;
-    gap: 8px;
-  }
-
-  nav button svg {
-    width: 20px;
-    height: 20px;
-  }
-
-  nav button span {
-    font-size: 9px;
-  }
+.active-icon {
+  stroke: #5FA85F;
 }
 
-@media (min-width: 768px) {
-  .container {
-    max-width: 480px;
-    margin: 0 auto;
-  }
-
-  nav {
-    max-width: 480px;
-    left: 50%;
-    transform: translateX(-50%);
-  }
-}
-
-/* Touch improvements */
-@media (hover: none) and (pointer: coarse) {
-  nav button:active {
-    opacity: 0.7;
-  }
+.active-label {
+  color: #5FA85F;
+  font-weight: 700;
 }
 </style>

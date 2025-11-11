@@ -191,12 +191,12 @@ label {
   font-size: 14px;
   box-sizing: border-box;
   outline-offset: 2px;
-  outline-color: #27ae60;
+  outline-color: #2a9314;
   transition: border-color 0.25s ease;
 }
 
 .input:focus {
-  border-color: #27ae60;
+  border-color: #2a9314;
 }
 
 .password-wrapper {
@@ -222,13 +222,13 @@ label {
   font-size: 12px;
   color: #cc0000;
   margin: 0 0 12px 4px;
-  font-weight: 600;
+
   text-align: left;
 }
 
 .signup-btn {
   width: 100%;
-  background-color: #27ae60;
+  background-color: #2a9314;
   border: none;
   padding: 14px 0;
   border-radius: 20px;
@@ -242,20 +242,20 @@ label {
 }
 
 .signup-btn:hover {
-  background-color: #219647;
+  background-color: #2a9314;
 }
 
 .login-link {
   font-size: 13px;
   font-weight: 400;
-  color: #27ae60;
+  color: #2a9314;
   text-align: center;
   margin-top: 18px;
 }
 
 .signup-link {
   color: #cc0000;
-  font-weight: 700;
+
   cursor: pointer;
   text-decoration: none;
   margin-left: 3px;

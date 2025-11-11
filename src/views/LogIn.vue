@@ -191,12 +191,12 @@ export default {
   font-size: 14px;
   box-sizing: border-box;
   outline-offset: 2px;
-  outline-color: #27ae60;
+  outline-color: #2a9314;
   transition: border-color 0.25s ease;
 }
 
 .input:focus {
-  border-color: #27ae60;
+  border-color: #2a9314;
 }
 
 .password-wrapper {
@@ -228,7 +228,7 @@ export default {
 
 .login-btn {
   width: 100%;
-  background-color: #27ae60;
+  background-color: #2a9314;
   border: none;
   padding: 14px 0;
   border-radius: 20px;
@@ -241,7 +241,7 @@ export default {
 }
 
 .login-btn:hover {
-  background-color: #219647;
+  background-color: #2a9314;
 }
 
 .forgot-link {
@@ -249,7 +249,7 @@ export default {
   margin: 18px 0 6px;
   font-weight: 600;
   font-size: 13px;
-  color: #27ae60;
+  color: #2a9314;
   cursor: pointer;
   text-decoration: none;
 }
@@ -261,7 +261,7 @@ export default {
 .signup-text {
   font-size: 13px;
   font-weight: 400;
-  color: #27ae60;
+  color: #2a9314;
 }
 
 .signup-link {

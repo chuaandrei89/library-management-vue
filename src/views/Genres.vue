@@ -1,7 +1,7 @@
 <template>
   <div class="container" role="main">
     <header>
-      <h3>Book Genres</h3>
+      <h class="title">Book Genres</h>
       <div
         class="notification"
         aria-label="Notifications with 1 new notification"
@@ -55,40 +55,45 @@
     </section>
   </div>
 
-  <!-- Navigation Bar -->
-<nav aria-label="Primary navigation">
-  <button @click="$router.push('/')">
-    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-      <path d="M3 9L12 2l9 7v11a1 1 0 01-1 1h-5v-6H9v6H4a1 1 0 01-1-1z" />
-    </svg>
-    <span>Home</span>
-  </button>
-  <button class="active" aria-current="page">
-    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-      <path d="M3 4v16h18V4H3zm14 11h-4v-2h4v2zm0-4h-4V9h4v2zM7 15h4v-2H7v2zm0-4h4V9H7v2z" />
-    </svg>
-    <span>Genres</span>
-  </button>
-  <button @click="$router.push('/booking')">
-    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-      <path d="M8 6h8v2H8zM8 10h8v2H8zM8 14h8v2H8z" />
-    </svg>
-    <span>Booking</span>
-  </button>
-  <button @click="$router.push('/lists')">
-    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-      <path d="M4 6h16v2H4zM4 10h16v2H4zM4 14h16v2H4z" />
-    </svg>
-    <span>Lists</span>
-  </button>
-  <button @click="$router.push('/profile')">
-    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-      <circle cx="12" cy="7" r="4" />
-      <path d="M6 21v-2a4 4 0 018 0v2" />
-    </svg>
-    <span>Profile</span>
-  </button>
-</nav>
+  <!-- Navigation Bar - UPDATED to match Lists page -->
+  <nav class="bottom-nav" role="navigation" aria-label="Primary">
+    <button class="nav-btn" aria-label="Home" @click="navigate('')" type="button">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" class="nav-icon">
+        <path d="M3 9L12 2l9 7v11a1 1 0 01-1 1h-5v-6H9v6H4a1 1 0 01-1-1z"/>
+      </svg>
+      <span>Home</span>
+    </button>
+    <button class="nav-btn active" aria-current="page" aria-label="Genres" @click="navigate('genres')" type="button">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#5FA85F" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" class="nav-icon active-icon">
+        <rect x="3" y="4" width="18" height="16" rx="2" ry="2"/>
+        <line x1="3" y1="10" x2="21" y2="10"/>
+        <line x1="7" y1="4" x2="7" y2="20"/>
+      </svg>
+      <span class="active-label">Genres</span>
+    </button>
+    <button class="nav-btn" aria-label="Booking" @click="navigate('booking')" type="button">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" class="nav-icon">
+        <rect x="3" y="4" width="18" height="16" rx="2" ry="2"/>
+        <line x1="3" y1="10" x2="21" y2="10"/>
+        <line x1="8" y1="2" x2="8" y2="6"/>
+        <line x1="16" y1="2" x2="16" y2="6"/>
+      </svg>
+      <span>Booking</span>
+    </button>
+    <button class="nav-btn" aria-label="Lists" @click="navigate('lists')" type="button">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" class="nav-icon">
+        <path d="M8 6h8v2H8zM8 10h8v2H8zM8 14h8v2H8z" />
+      </svg>
+      <span>Lists</span>
+    </button>
+    <button class="nav-btn" aria-label="Profile" @click="navigate('profile')" type="button">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" class="nav-icon">
+        <circle cx="12" cy="7" r="4" />
+        <path d="M5.5 21a6 6 0 0113 0" />
+      </svg>
+      <span>Profile</span>
+    </button>
+  </nav>
 </template>
 
 <script>
@@ -130,6 +135,9 @@ export default {
     handleNotificationClick() {
       console.log('Notification clicked');
       // Add notification logic here
+    },
+    navigate(page) {
+      this.$router.push(`/${page}`);
     }
   }
 }
@@ -147,6 +155,12 @@ export default {
   padding: 0;
 }
 
+.title {
+  font-weight: 600;
+  font-size: 17px;
+  color: black;
+  margin: 0;
+}
 body {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
     Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
@@ -302,53 +316,69 @@ header h1 {
   fill: none;
 }
 
-/* Navigation Bar */
-nav {
+/* Navigation Bar - UPDATED to match Lists page */
+.bottom-nav {
   position: fixed;
   bottom: 0;
-  left: 0;
-  right: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  max-width: 480px;
+  width: 100%;
   background: #fff;
-  border-top: 1px solid #e0e0e0;
+  border-top: 1px solid #ccc;
   display: flex;
   justify-content: space-around;
-  padding: 8px 0 16px;
-  box-shadow: 0 -2px 12px rgba(0, 0, 0, 0.08);
-  z-index: 1000;
-  backdrop-filter: blur(10px);
+  padding: 8px 0 14px;
+  box-shadow: 0 -1px 10px rgb(0 0 0 / 0.04);
+  z-index: 10;
 }
 
-nav button {
+.nav-btn {
   background: none;
   border: none;
-  font-size: clamp(10px, 2.5vw, 11px);
-  color: #666;
+  color: #333;
+  font-size: 11px;
   display: flex;
   flex-direction: column;
   align-items: center;
+  gap: 5px;
   cursor: pointer;
   font-weight: 500;
-  gap: 4px;
-  flex: 1;
-  padding: 4px;
-  transition: color 0.2s ease;
-  min-width: 0;
+  user-select: none;
+  padding: 0;
+  width: 56px;
 }
 
-nav button.active {
-  color: #5FA85F;
-  font-weight: 600;
+.nav-btn:focus {
+  outline: 2px solid #5FA85F;
+  outline-offset: 2px;
 }
 
-nav button svg {
-  width: 24px;
-  height: 24px;
-  stroke: currentColor;
+.nav-btn .nav-icon {
+  width: 22px;
+  height: 22px;
   stroke-width: 2;
+  stroke: currentColor;
   fill: none;
 }
 
-/* Responsive Design */
+.nav-btn.active,
+.nav-btn.active span,
+.nav-btn.active .active-icon {
+  color: #5FA85F;
+  font-weight: 700;
+}
+
+.active-icon {
+  stroke: #5FA85F;
+}
+
+.active-label {
+  color: #5FA85F;
+  font-weight: 700;
+}
+
+/* Your existing responsive design remains the same */
 @media (max-width: 480px) {
   .container {
     padding: 0 12px 80px;
@@ -358,13 +388,8 @@ nav button svg {
     padding: 16px 14px;
   }
 
-  nav {
+  .bottom-nav {
     padding: 6px 0 14px;
-  }
-
-  nav button svg {
-    width: 22px;
-    height: 22px;
   }
 }
 
@@ -381,12 +406,7 @@ nav button svg {
     font-size: 14px;
   }
 
-  nav button svg {
-    width: 20px;
-    height: 20px;
-  }
-
-  nav button span {
+  .nav-btn span {
     font-size: 9px;
   }
 }
@@ -397,7 +417,7 @@ nav button svg {
     margin: 0 auto;
   }
 
-  nav {
+  .bottom-nav {
     max-width: 480px;
     left: 50%;
     transform: translateX(-50%);
@@ -408,7 +428,7 @@ nav button svg {
 @media (hover: none) and (pointer: coarse) {
   .genre-item:active,
   .notification:active,
-  nav button:active {
+  .nav-btn:active {
     opacity: 0.7;
   }
 }
@@ -416,7 +436,7 @@ nav button svg {
 /* Focus styles for accessibility */
 .genre-item:focus,
 .search-input:focus,
-nav button:focus {
+.nav-btn:focus {
   outline: 2px solid #5FA85F;
   outline-offset: 2px;
 }
