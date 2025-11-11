@@ -10,7 +10,7 @@
 
     <!-- Main content -->
     <div class="content">
-      <img src="@/assets/images/onboarding.png" alt="Reading Illustration" class="onboard-image" />
+      <img src="../assets/images/onboarding.png" alt="Reading Illustration" class="onboard-image" />
       <h1>Discover a smarter<br />way to read!</h1>
       <p>Access thousands of books anytime,<br />anywhere.</p>
     </div>
@@ -47,6 +47,7 @@ export default {
     },
     goToNextPage() {
       this.$router.push({ name: 'Onboarding2' }) // Fixed: Use route name
+      localStorage.setItem("currentOnboard", "2")
     },
     goToLoginPage() {
       this.$router.push({ name: 'Login' }) // Fixed: Use route name
@@ -55,5 +56,5 @@ export default {
 }
 </script>
 
-<style scoped src="@/assets/onboarding.css"></style>
+<style scoped src="../assets/onboarding.css"></style>
 <!-- Assumed CSS file exists -->

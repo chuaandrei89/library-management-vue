@@ -10,7 +10,7 @@
 
     <!-- MasaoLMS Login -->
     <button class="masao-btn" @click="loginWithMasao">
-      <img src="@/assets/masaologo.png" alt="MasaoLMS logo" class="masao-logo" />
+      <img src="../assets/masaologo.png" alt="MasaoLMS logo" class="masao-logo" />
       Log in with MasaoLMS
     </button>
 
@@ -52,7 +52,7 @@
 </template>
 
 <script>
-import bookLogo from '@/assets/book.png'
+import bookLogo from '../assets/book.png'
 
 export default {
   data() {

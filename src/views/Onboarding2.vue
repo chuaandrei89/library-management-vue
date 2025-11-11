@@ -11,11 +11,11 @@
     <!-- Main content -->
     <div class="content">
       <img
-        src="@/assets/images/onboarding.png"
+        src="../assets/images/onboarding.png"
         alt="Personalized Recommendations"
         class="onboard-image"
       />
-      <h1>Track Your Progress<br />& Recommendations</h1>
+      <h1>Track Your Progress</h1>
       <!-- Fixed: Completed text -->
       <p>Monitor your activities easily and stay on top of your goals.</p>
     </div>
@@ -52,6 +52,7 @@ export default {
     },
     goToNextPage() {
       this.$router.push({ name: 'Onboarding3' }) // Fixed: Use route name
+      localStorage.setItem("currentOnboard", 3)
     },
     goToLoginPage() {
       this.$router.push({ name: 'Login' }) // Fixed: Use route name
@@ -60,4 +61,4 @@ export default {
 }
 </script>
 
-<style scoped src="@/assets/onboarding.css"></style>
+<style scoped src="../assets/onboarding.css"></style>

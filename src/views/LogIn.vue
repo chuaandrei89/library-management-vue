@@ -5,11 +5,12 @@
       alt="Logo"
       class="logo"
     />
+     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <h1 class="welcome-text">Welcome!<br />Sign in to continue!</h1>
 
     <button class="msalms-btn" @click="loginMasaoLMS">
       <img
-        src="https://upload.wikimedia.org/wikipedia/en/thumb/4/4a/University_of_Green_logo.svg/120px-University_of_Green_logo.svg.png"
+        src="../assets/masaologo.png"
         alt="MasaoLMS Logo"
         class="msalms-logo"
       />
@@ -105,6 +106,7 @@ export default {
       if (!this.passwordError) {
         alert(`Logged in as ${this.username}`)
         // Add your login logic here, e.g., API call
+         localStorage.setItem('isAuthenticated', 'true')
         this.$router.push({ name: 'Home' }) // Assuming a home route; adjust as needed
       }
     },
@@ -121,7 +123,9 @@ export default {
 </script>
 
 <style scoped>
-/* Same as original, no changes needed */
+* {
+  font-family: 'Poppins', sans-serif;
+}
 .container {
   background: #fff;
   max-width: 320px;
