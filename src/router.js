@@ -7,6 +7,7 @@ import LogIn from "./views/LogIn.vue";
 import Onboarding1 from "./views/Onboarding1.vue";
 import Onboarding2 from "./views/Onboarding2.vue";
 import Onboarding3 from "./views/Onboarding3.vue";
+import Profile from "./views/Profile.vue";
 import SignUp from "./views/SignUp.vue";
 
 const routes = [
@@ -43,6 +44,12 @@ const routes = [
     path: "/lists",
     name: "Lists",
     component: Lists,
+    meta: { requiresAuth: true },
+  },
+  {
+    path: "/profile",
+    name: "Profile",
+    component: Profile,
     meta: { requiresAuth: true },
   },
 ];

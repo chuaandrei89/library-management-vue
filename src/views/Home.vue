@@ -337,7 +337,7 @@ export default {
   width: 100px;
   height: 140px;
   border-radius: 12px;
-  border: 2px solid #5FA85F;
+  border: 2px solid #2a9314;
   overflow: hidden;
   flex-shrink: 0;
   position: relative;
@@ -385,7 +385,7 @@ export default {
 
 .browse-all {
   font-size: 14px;
-  color: #5FA85F;
+  color: #2a9314;
   font-weight: 600;
   cursor: pointer;
   user-select: none;
@@ -447,8 +447,8 @@ export default {
 }
 
 .tab.active {
-  color: #5FA85F;
-  border-bottom: 2px solid #5FA85F;
+  color: #2a9314;
+  border-bottom: 2px solid #2a9314;
 }
 
 /* Cards */

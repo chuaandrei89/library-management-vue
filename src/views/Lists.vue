@@ -89,15 +89,18 @@ export default {
   data() {
     return {
       selectedSemester: "1",
-      books: [
-        { category: "Computer Science", code: "TL", number: "2301" },
-        { category: "History & Culture", code: "FG", number: "2327" },
-        { category: "Mathematics", code: "MD", number: "2328" },
-        { category: "Arts & Culture", code: "NL", number: "2395" },
-        { category: "Artifical Intelligence", code: "TL", number: "3467" },
-        { category: "Physics", code: "RQ", number: "3897" },
-        { category: "Literature", code: "BA", number: "3700" },
-      ],
+     books: [
+  { category: "Computer Science", code: "TL", number: "2301" },
+  { category: "History & Culture", code: "FG", number: "2327" },
+  { category: "Mathematics", code: "MD", number: "2328" },
+  { category: "Arts & Culture", code: "NL", number: "2395" },
+  { category: "Artificial Intelligence", code: "TL", number: "3467" },
+  { category: "Physics", code: "RQ", number: "3897" },
+  { category: "Literature", code: "BA", number: "3700" },
+  { category: "Biology", code: "SC", number: "4150" },
+  { category: "Chemistry", code: "CH", number: "3985" },
+  { category: "Philosophy", code: "PH", number: "3620" }
+],
     };
   },
   methods: {
@@ -225,20 +228,20 @@ export default {
   background-color: rgba(255, 255, 255, 0.2);
   border-radius: 10px;
 }
-
 .book-card {
   background: #fff;
-  border-radius: 24px;
+  border-radius: 12px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 18px 24px 18px 26px;
-  margin-bottom: 16px;
+  padding: 8px 16px 8px 18px;
+  margin-bottom: 16px; /* Increased spacing between cards */
   font-weight: 600;
-  font-size: 16px;
+  font-size: 14px;
   user-select: none;
   cursor: default;
-  box-shadow: 0 4px 9px rgb(0 0 0 / 0.07);
+  box-shadow: 0 1px 4px rgb(0 0 0 / 0.07);
+  min-height: 40px;
 }
 
 .category-name {
@@ -247,36 +250,39 @@ export default {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  font-size: 14px;
 }
 
 .code-container {
   background: #fff;
   border: 1px solid #dbdbdb;
-  border-radius: 20px 24px 24px 20px;
-  min-width: 75px;
-  padding: 8px 14px 8px 12px;
-  text-align: right;
+  border-radius: 10px 14px 14px 10px;
+  min-width: 70px; /* Even smaller */
+  padding: 6px 12px; /* Minimal padding */
+  text-align: center;
   display: flex;
   flex-direction: column;
   user-select: none;
   justify-content: center;
+  align-items: center;
   color: #5E5E5E;
   font-size: 13px;
   font-weight: 600;
+  height: 30px; /* Compact height */
 }
 
 .code {
   color: black;
   font-weight: 700;
   font-size: 13px;
-  line-height: 1.1;
-  margin-bottom: 2px;
+  line-height: 0.9;
 }
 
 .number {
   font-weight: 500;
   font-size: 12px;
   color: #7c7c7c;
+  line-height: 0.9;
 }
 
 .bottom-nav {

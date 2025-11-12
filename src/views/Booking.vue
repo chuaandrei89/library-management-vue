@@ -267,7 +267,7 @@ header h1 {
 .date-number {
   font-size: 32px;
   font-weight: 700;
-  color: #5FA85F;
+  color:#80a42a;
 }
 
 .month-year {
@@ -307,7 +307,7 @@ header h1 {
 }
 
 .week-dates span.active {
-  background: #5FA85F;
+  background:#80a42a;
   color: white;
 }
 
