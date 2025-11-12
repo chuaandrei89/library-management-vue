@@ -3,13 +3,7 @@
     <!-- Top Bar -->
     <header class="top-bar">
       <h1 class="title">Returned Books</h1>
-      <button aria-label="Notifications" class="notification-btn" type="button" @click="onNotificationClick">
-        <svg class="bell-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6 6 0 10-12 0v3.159c0 .538-.214 1.055-.595 1.436L4 17h5" />
-          <path d="M13.73 21a2 2 0 01-3.46 0" />
-        </svg>
-        <span class="notification-badge" aria-hidden="true">1</span>
-      </button>
+      <NotificationBell />
       <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     </header>
 
@@ -84,8 +78,13 @@
 </template>
 
 <script>
+import NotificationBell from './../components/NotificationBell.vue'
+
 export default {
   name: "Lists",
+  components: {
+    NotificationBell
+  },
   data() {
     return {
       selectedSemester: "1",
@@ -104,9 +103,6 @@ export default {
     };
   },
   methods: {
-  onNotificationClick() {
-    // You can implement your notification logic here
-  },
   navigate(page) {
     // Use Vue Router to navigate programmatically
     this.$router.push(`/${page}`);
@@ -143,38 +139,6 @@ export default {
   font-size: 17px;
   color: black;
   margin: 0;
-}
-
-.notification-btn {
-  position: absolute;
-  right: 0;
-  top: 6px;
-  background: transparent;
-  border: none;
-  cursor: pointer;
-  padding: 8px;
-  color: black;
-}
-
-.bell-icon {
-  width: 24px;
-  height: 24px;
-}
-
-.notification-badge {
-  position: absolute;
-  top: 6px;
-  right: 6px;
-  background: #ff3b30;
-  color: white;
-  font-weight: 700;
-  font-size: 12px;
-  width: 17px;
-  height: 17px;
-  line-height: 17px;
-  border-radius: 50%;
-  text-align: center;
-  pointer-events: none;
 }
 
 .info-bar {

@@ -3,28 +3,7 @@
     <!-- Header -->
     <header class="top-bar">
       <h3 class="title">Profile</h3>
-      <button
-        aria-label="Notifications"
-        class="notification-btn"
-        type="button"
-        @click="handleNotificationClick"
-      >
-        <svg
-          class="bell-icon"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="2"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-        >
-          <path
-            d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6 6 0 10-12 0v3.159c0 .538-.214 1.055-.595 1.436L4 17h5"
-          />
-          <path d="M13.73 21a2 2 0 01-3.46 0" />
-        </svg>
-        <span class="notification-badge" aria-hidden="true">1</span>
-      </button>
+      <NotificationBell />
       <link
         href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
         rel="stylesheet"
@@ -40,7 +19,7 @@
           class="profile-pic"
         />
         <div class="profile-info">
-          <h2 class="profile-name">Crystal Sheen Abacajen</h2>
+          <h3 class="profile-name">Crystal Sheen Abacajen</h3>
           <div class="profile-id">231-00647</div>
           <div class="clear-btn" tabindex="0" @click="clearProfile">Clear</div>
         </div>
@@ -299,18 +278,19 @@
 </template>
 
 <script>
-//import profileImage from '@/assets/images/your-photo.jpg';
+import NotificationBell from './../components/NotificationBell.vue'
+
 export default {
   name: 'Profile',
+  components: {
+    NotificationBell
+  },
   computed: {
     currentRoute() {
       return this.$route.path;
     }
   },
   methods: {
-    handleNotificationClick() {
-      console.log('Notification clicked');
-    },
     clearProfile() {
       console.log('Clear clicked');
     },
@@ -363,38 +343,6 @@ export default {
     text-align: center;
   }
 
-  .notification-btn {
-    position: absolute;
-    right: 0;
-    top: 6px;
-    background: transparent;
-    border: none;
-    cursor: pointer;
-    padding: 8px;
-    color: black;
-  }
-
-  .bell-icon {
-    width: 24px;
-    height: 24px;
-  }
-
-  .notification-badge {
-    position: absolute;
-    top: 6px;
-    right: 6px;
-    background: #ff3b30;
-    color: white;
-    font-weight: 700;
-    font-size: 12px;
-    width: 17px;
-    height: 17px;
-    line-height: 17px;
-    border-radius: 50%;
-    text-align: center;
-    pointer-events: none;
-  }
-
   /* Container content styling */
   .container {
     max-width: 100%;
@@ -420,8 +368,8 @@ export default {
   }
 
   .profile-name {
-    font-weight: 700;
-    font-size: 18px;
+    font-weight: 500;
+    font-size: 17.5px;
     margin: 0 0 4px 0;
   }
 
@@ -545,7 +493,7 @@ export default {
 
   .stat-text {
     font-size: 13px;
-    font-weight: 700;
+    font-weight: 600;
     color: #333;
     user-select: none;
   }
@@ -569,8 +517,8 @@ export default {
     align-items: center;
     gap: 14px;
     padding: 12px 20px;
-    font-weight: 600;
-    font-size: 15px;
+    font-weight: 500;
+    font-size: 14px;
     color: #000;
     cursor: pointer;
     user-select: none;

@@ -2,19 +2,7 @@
   <div class="container" role="main">
     <header>
      <h3 class="title">Booking</h3>
-      <div
-        class="notification"
-        aria-label="Notifications with 1 new notification"
-        tabindex="0"
-        role="button"
-        @click="handleNotificationClick"
-      >
-        <!-- Bell Icon SVG -->
-        <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-          <path d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6 6 0 10-12 0v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
-        </svg>
-        <div class="notification-badge" aria-hidden="true">1</div>
-      </div>
+      <NotificationBell />
       <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     </header>
 
@@ -157,12 +145,14 @@
 </template>
 
 <script>
+import NotificationBell from './../components/NotificationBell.vue'
+
 export default {
   name: 'Booking',
+  components: {
+    NotificationBell
+  },
   methods: {
-    handleNotificationClick() {
-      console.log('Notification clicked');
-    },
     navigate(page) {
       this.$router.push(`/${page}`);
     }
@@ -220,39 +210,6 @@ header h1 {
   text-align: center;
 }
 
-/* Notification */
-.notification {
-  position: absolute;
-  right: 0;
-  top: 50%;
-  transform: translateY(-50%);
-  cursor: pointer;
-  padding: 8px;
-}
-
-.notification svg {
-  width: 24px;
-  height: 24px;
-  stroke: black;
-  fill: none;
-  stroke-width: 2;
-}
-
-.notification-badge {
-  position: absolute;
-  top: 4px;
-  right: 4px;
-  background: #ff3b30;
-  color: white;
-  font-size: 10px;
-  font-weight: 600;
-  width: 16px;
-  height: 16px;
-  border-radius: 50%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
 /* Date Section */
 .date-section {
   margin-bottom: 24px;
