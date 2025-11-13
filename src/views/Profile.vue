@@ -169,101 +169,110 @@
       </section>
     </main>
 
-    <!-- Bottom Navigation Bar like other pages -->
+    <!-- Bottom Navigation Bar - icons only with semicircle indicator -->
     <nav class="bottom-nav" role="navigation" aria-label="Primary">
       <button
         class="nav-btn"
-        :class="{ active: currentRoute === '/' || currentRoute === '/home' }"
+        :class="{ active: activeNav === 'home' }"
         aria-label="Home"
-        @click="navigate('home')"
         type="button"
+        @click="navigate('home')"
       >
         <svg
           viewBox="0 0 24 24"
-          aria-hidden="true"
-          focusable="false"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linejoin="round"
+          stroke-linecap="round"
           class="nav-icon"
-          :class="{ 'active-icon': currentRoute === '/' || currentRoute === '/home' }"
         >
-          <path
-            d="M3 9L12 2l9 7v11a1 1 0 01-1 1h-5v-6H9v6H4a1 1 0 01-1-1z"
-          />
+          <path d="M3 9L12 2l9 7v11a1 1 0 01-1 1h-5v-6H9v6H4a1 1 0 01-1-1z" />
         </svg>
-        <span class="nav-label">Home</span>
+        <span class="indicator" v-if="activeNav === 'home'" />
       </button>
+
       <button
         class="nav-btn"
-        :class="{ active: currentRoute === '/genres' }"
+        :class="{ active: activeNav === 'genres' }"
         aria-label="Genres"
-        @click="navigate('genres')"
         type="button"
+        @click="navigate('genres')"
       >
         <svg
           viewBox="0 0 24 24"
-          aria-hidden="true"
-          focusable="false"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linejoin="round"
+          stroke-linecap="round"
           class="nav-icon"
-          :class="{ 'active-icon': currentRoute === '/genres' }"
         >
           <rect x="3" y="4" width="18" height="16" rx="2" ry="2" />
           <line x1="3" y1="10" x2="21" y2="10" />
           <line x1="7" y1="4" x2="7" y2="20" />
         </svg>
-        <span class="nav-label">Genres</span>
+        <span class="indicator" v-if="activeNav === 'genres'" />
       </button>
+
       <button
         class="nav-btn"
-        :class="{ active: currentRoute === '/booking' }"
+        :class="{ active: activeNav === 'booking' }"
         aria-label="Booking"
-        @click="navigate('booking')"
         type="button"
+        @click="navigate('booking')"
       >
         <svg
           viewBox="0 0 24 24"
-          aria-hidden="true"
-          focusable="false"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linejoin="round"
+          stroke-linecap="round"
           class="nav-icon"
-          :class="{ 'active-icon': currentRoute === '/booking' }"
         >
           <rect x="3" y="4" width="18" height="16" rx="2" ry="2" />
           <line x1="3" y1="10" x2="21" y2="10" />
           <line x1="8" y1="2" x2="8" y2="6" />
           <line x1="16" y1="2" x2="16" y2="6" />
         </svg>
-        <span class="nav-label">Booking</span>
+        <span class="indicator" v-if="activeNav === 'booking'" />
       </button>
+
       <button
         class="nav-btn"
-        :class="{ active: currentRoute === '/lists' }"
+        :class="{ active: activeNav === 'lists' }"
         aria-label="Lists"
-        @click="navigate('lists')"
         type="button"
+        @click="navigate('lists')"
       >
         <svg
           viewBox="0 0 24 24"
-          aria-hidden="true"
-          focusable="false"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linejoin="round"
+          stroke-linecap="round"
           class="nav-icon"
-          :class="{ 'active-icon': currentRoute === '/lists' }"
         >
-          <path d="M4 6h16v2H4zM4 10h16v2H4zM4 14h16v2H4z" />
+          <path d="M8 6h8v2H8zM8 10h8v2H8zM8 14h8v2H8z" />
         </svg>
-        <span class="nav-label">Lists</span>
+        <span class="indicator" v-if="activeNav === 'lists'" />
       </button>
+
       <button
         class="nav-btn"
-        :class="{ active: currentRoute === '/profile' }"
+        :class="{ active: activeNav === 'profile' }"
+        aria-current="page"
         aria-label="Profile"
-        @click="navigate('profile')"
         type="button"
+        @click="navigate('profile')"
       >
         <svg
           viewBox="0 0 24 24"
-          aria-hidden="true"
-          focusable="false"
+          fill="none"
           stroke="#5FA85F"
           stroke-width="2"
-          fill="none"
           stroke-linejoin="round"
           stroke-linecap="round"
           class="nav-icon active-icon"
@@ -271,7 +280,7 @@
           <circle cx="12" cy="7" r="4" />
           <path d="M5.5 21a6 6 0 0113 0" />
         </svg>
-        <span class="nav-label active-label">Profile</span>
+        <span class="indicator" v-if="activeNav === 'profile'" />
       </button>
     </nav>
   </div>
@@ -285,9 +294,9 @@ export default {
   components: {
     NotificationBell
   },
-  computed: {
-    currentRoute() {
-      return this.$route.path;
+  data() {
+    return {
+      activeNav: 'profile', // Active nav
     }
   },
   methods: {
@@ -305,331 +314,422 @@ export default {
       this.$router.push('/login');
     },
     navigate(page) {
-      this.$router.push(`/${page}`);
+      this.activeNav = page || 'profile'
+      this.$router.push(`/${page}`)
     }
   },
 };
 </script>
 
 <style scoped>
-  /* Use same font for consistency */
-  * {
-    font-family: 'Poppins', sans-serif;
-    box-sizing: border-box;
-  }
+* {
+  font-family: 'Poppins', sans-serif;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
 
-  .profile-page {
-    background: #fff;
-    max-width: 480px;
-    margin: 0 auto;
-    padding: 0 16px 70px;
-    color: #000;
-  }
+body {
+  background: #fff;
+  color: #000;
+  line-height: 1.4;
+  display: flex;
+  justify-content: center;
+  overflow-x: hidden;
+}
 
-  /* Header */
-  .top-bar {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 12px 0 8px;
-    position: relative;
-    border-bottom: 1px solid #eee;
-  }
+/* Main container - FIXED to match navbar width */
+.profile-page {
+  max-width: 480px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 0 16px 80px;
+  min-height: 100vh;
+  position: relative;
+  overflow-x: hidden;
+}
 
-  .title {
-    font-weight: 600;
-    font-size: 17px;
-    margin: 0;
-    text-align: center;
-  }
+/* Header */
+.top-bar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 16px 0;
+  position: relative;
+  border-bottom: 1px solid #eee;
+  margin-bottom: 20px;
+  width: 100%;
+}
 
-  /* Container content styling */
-  .container {
-    max-width: 100%;
-    margin: 0 auto;
-  }
+.title {
+  font-weight: 600;
+  font-size: 17px;
+  margin: 0;
+  text-align: center;
+  color: black;
+}
 
-  .profile-header {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    margin: 24px 0 12px 0;
-  }
+/* Container content styling */
+.container {
+  max-width: 100%;
+  margin: 0 auto;
+  width: 100%;
+}
 
-  .profile-pic {
-    width: 56px;
-    height: 56px;
-    border-radius: 50%;
-    object-fit: cover;
-  }
+.profile-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin: 24px 0 12px 0;
+  width: 100%;
+}
 
-  .profile-info {
-    flex: 1;
-  }
+.profile-pic {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  object-fit: cover;
+}
 
-  .profile-name {
-    font-weight: 500;
-    font-size: 17.5px;
-    margin: 0 0 4px 0;
-  }
+.profile-info {
+  flex: 1;
+  width: 100%;
+}
 
-  .profile-id {
-    font-size: 13px;
-    color: #555;
-  }
+.profile-name {
+  font-weight: 500;
+  font-size: 17.5px;
+  margin: 0 0 4px 0;
+}
 
-  .clear-btn {
-    display: inline-block;
-    margin-top: 6px;
-    padding: 2px 10px;
-    background-color: #b8d6b8;
-    color: #2c662c;
-    font-weight: 600;
-    font-size: 12px;
-    border-radius: 12px;
-    user-select: none;
-    cursor: pointer;
-  }
+.profile-id {
+  font-size: 13px;
+  color: #555;
+}
 
-  .button-group {
-    display: flex;
-    gap: 16px;
-    justify-content: start;
-    margin: 16px 0 24px 0;
-    flex-wrap: wrap;
-  }
+.clear-btn {
+  display: inline-block;
+  margin-top: 6px;
+  padding: 2px 10px;
+  background-color: #b8d6b8;
+  color: #2c662c;
+  font-weight: 600;
+  font-size: 12px;
+  border-radius: 12px;
+  user-select: none;
+  cursor: pointer;
+}
 
-  .btn-item {
-    border: 1.7px solid #9baf9b;
-    border-radius: 10px;
-    padding: 8px 16px;
-    font-weight: 600;
-    font-size: 13px;
-    color: #4a6b4a;
-    user-select: none;
-    cursor: default;
-    min-width: 110px;
-    text-align: center;
-  }
+.button-group {
+  display: flex;
+  gap: 16px;
+  justify-content: start;
+  margin: 16px 0 24px 0;
+  flex-wrap: wrap;
+  width: 100%;
+}
 
-  .statistics-card {
-    border: 1.7px solid #9baf9b;
-    border-radius: 16px;
-    padding: 16px 20px 18px 20px;
-    margin-bottom: 24px;
-    background: #f7f9f7;
-  }
+.btn-item {
+  border: 1.7px solid #9baf9b;
+  border-radius: 10px;
+  padding: 8px 16px;
+  font-weight: 600;
+  font-size: 13px;
+  color: #4a6b4a;
+  user-select: none;
+  cursor: default;
+  min-width: 110px;
+  text-align: center;
+}
 
-  .stats-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    font-weight: 600;
-    font-size: 15px;
-    margin-bottom: 6px;
-  }
+.statistics-card {
+  border: 1.7px solid #9baf9b;
+  border-radius: 16px;
+  padding: 16px 20px 18px 20px;
+  margin-bottom: 24px;
+  background: #f7f9f7;
+  width: 100%;
+}
 
-  .stats-date {
-    font-weight: 400;
-    font-size: 12px;
-    color: #7c7c7c;
-    margin-bottom: 12px;
-  }
+.stats-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: 600;
+  font-size: 15px;
+  margin-bottom: 6px;
+  width: 100%;
+}
 
-  .active-badge {
-    background-color: #9be170;
-    color: #2c5502;
-    padding: 4px 13px;
-    font-weight: 700;
-    font-size: 13px;
-    border-radius: 14px;
-    user-select: none;
-  }
+.stats-date {
+  font-weight: 400;
+  font-size: 12px;
+  color: #7c7c7c;
+  margin-bottom: 12px;
+}
 
-  .stats-items {
-    display: flex;
-    justify-content: space-around;
-    gap: 22px;
-    flex-wrap: wrap;
-  }
+.active-badge {
+  background-color: #9be170;
+  color: #2c5502;
+  padding: 4px 13px;
+  font-weight: 700;
+  font-size: 13px;
+  border-radius: 14px;
+  user-select: none;
+}
 
-  .stat-item {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 6px;
-    min-width: 80px;
-    text-align: center;
-  }
+.stats-items {
+  display: flex;
+  justify-content: space-around;
+  gap: 22px;
+  flex-wrap: wrap;
+  width: 100%;
+}
 
-  .icon-circle {
-    width: 38px;
-    height: 38px;
-    border-radius: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
+.stat-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  min-width: 80px;
+  text-align: center;
+}
 
-  .icon-borrow {
-    background: #facb00;
-  }
+.icon-circle {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
-  .icon-returned {
-    background: #f46b2b;
-  }
+.icon-borrow {
+  background: #facb00;
+}
 
-  .icon-reserved {
-    background: #8561c5;
-  }
+.icon-returned {
+  background: #f46b2b;
+}
 
-  svg.stat-icon {
-    width: 20px;
-    height: 20px;
-    stroke: white;
-    stroke-width: 2;
-    fill: none;
-  }
+.icon-reserved {
+  background: #8561c5;
+}
 
-  .stat-text {
-    font-size: 13px;
-    font-weight: 600;
-    color: #333;
-    user-select: none;
-  }
+svg.stat-icon {
+  width: 20px;
+  height: 20px;
+  stroke: white;
+  stroke-width: 2;
+  fill: none;
+}
 
-  .stat-percent {
-    font-size: 12px;
-    font-weight: 600;
-    color: #666;
-    user-select: none;
-  }
+.stat-text {
+  font-size: 13px;
+  font-weight: 600;
+  color: #333;
+  user-select: none;
+}
 
-  .dashboard-card {
-    border: 1.7px solid #9baf9b;
-    border-radius: 16px;
-    padding: 0;
-    background: #f7f9f7;
-  }
+.stat-percent {
+  font-size: 12px;
+  font-weight: 600;
+  color: #666;
+  user-select: none;
+}
 
-  .dashboard-item {
-    display: flex;
-    align-items: center;
-    gap: 14px;
-    padding: 12px 20px;
-    font-weight: 500;
-    font-size: 14px;
-    color: #000;
-    cursor: pointer;
-    user-select: none;
-    transition: background-color 0.15s ease-in-out;
-  }
+.dashboard-card {
+  border: 1.7px solid #9baf9b;
+  border-radius: 16px;
+  padding: 0;
+  background: #f7f9f7;
+  width: 100%;
+}
 
-  .dashboard-item:not(:last-child) {
-    border-bottom: 1px solid #cdd7cd;
-  }
+.dashboard-item {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 12px 20px;
+  font-weight: 500;
+  font-size: 14px;
+  color: #000;
+  cursor: pointer;
+  user-select: none;
+  transition: background-color 0.15s ease-in-out;
+  width: 100%;
+}
 
-  .dashboard-item:hover,
-  .dashboard-item:focus {
-    background-color: #e6f1e6;
-    outline: none;
-  }
+.dashboard-item:not(:last-child) {
+  border-bottom: 1px solid #cdd7cd;
+}
 
-  .dashboard-icon {
-    width: 24px;
-    height: 24px;
-    stroke-width: 2;
-    stroke: #5fa85f;
-    fill: none;
-  }
+.dashboard-item:hover,
+.dashboard-item:focus {
+  background-color: #e6f1e6;
+  outline: none;
+}
 
-  .dashboard-arrow {
-    margin-left: auto;
-    width: 16px;
-    height: 16px;
-    stroke: #8a8a8a;
-    stroke-width: 2;
-    fill: none;
-  }
+.dashboard-icon {
+  width: 24px;
+  height: 24px;
+  stroke-width: 2;
+  stroke: #5fa85f;
+  fill: none;
+}
 
-  /* Bottom Navigation Bar */
+.dashboard-arrow {
+  margin-left: auto;
+  width: 16px;
+  height: 16px;
+  stroke: #8a8a8a;
+  stroke-width: 2;
+  fill: none;
+}
+
+.bottom-nav {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #fff;
+  border-radius: 26px;
+  width: 360px;
+  height: 56px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.18);
+  display: flex;
+  justify-content: space-evenly;
+  padding: 0 20px;
+  z-index: 20;
+}
+
+.nav-btn {
+  position: relative;
+  background: none;
+  border: none;
+  color: #333;
+  width: 48px;
+  height: 48px;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.nav-btn .nav-icon {
+  width: 26px;
+  height: 26px;
+  stroke: currentColor;
+  fill: none;
+}
+
+.nav-btn.active {
+  color: #136f13; /* Green color for active icon */
+}
+
+.nav-btn.active .nav-icon {
+  stroke: #136f13; /* Green stroke for active icon */
+}
+
+/* Semicircle indicator below active icon */
+.indicator {
+  position: absolute;
+  bottom: -8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 28px;
+  height: 14px;
+  background: #136f13;
+  border-radius: 14px 14px 0 0;
+  box-shadow: 0 3px 6px rgba(95, 168, 95, 0.4);
+  z-index: -1;
+  transition: all 0.3s ease;
+}
+
+/* Responsive adjustments */
+@media (max-width: 480px) {
   .bottom-nav {
-    position: fixed;
-    bottom: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    max-width: 480px;
     width: 100%;
-    background: #fff;
-    border-top: 1px solid #ccc;
-    display: flex;
-    justify-content: space-around;
-    padding: 8px 0 14px;
-    box-shadow: 0 -1px 10px rgb(0 0 0 / 0.04);
-    z-index: 10;
+    max-width: 360px;
+    height: 48px;
+    padding: 0 12px;
   }
 
   .nav-btn {
-    background: none;
-    border: none;
-    color: #333;
-    font-size: 11px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 5px;
-    cursor: pointer;
-    font-weight: 500;
-    user-select: none;
-    padding: 0;
-    width: 56px;
-  }
-
-  .nav-btn:focus {
-    outline: 2px solid #5FA85F;
-    outline-offset: 2px;
+    width: 44px;
+    height: 44px;
   }
 
   .nav-btn .nav-icon {
     width: 22px;
     height: 22px;
-    stroke-width: 2;
-    stroke: currentColor;
-    fill: none;
   }
 
-  .nav-btn.active,
-  .nav-btn.active span,
-  .nav-btn.active .active-icon {
-    color: #5FA85F;
-    font-weight: 700;
+  .indicator {
+    bottom: -6px;
+    width: 24px;
+    height: 12px;
+  }
+}
+
+@media (max-width: 360px) {
+  .bottom-nav {
+    padding: 0 8px;
   }
 
-  .active-icon {
-    stroke: #5FA85F;
+  .nav-btn {
+    width: 40px;
+    height: 40px;
   }
 
-  .active-label {
-    color: #5FA85F;
-    font-weight: 700;
+  .nav-btn .nav-icon {
+    width: 20px;
+    height: 20px;
   }
 
-  /* Responsive tweaks */
-  @media (max-width: 400px) {
-    .profile-header {
-      gap: 12px;
-    }
-    .btn-item {
-      font-size: 12px;
-      min-width: 90px;
-    }
-    .nav-btn {
-      font-size: 10px;
-      width: 48px;
-    }
-    .nav-btn .nav-icon {
-      width: 18px;
-      height: 18px;
-    }
+  .indicator {
+    bottom: -6px;
+    width: 24px;
+    height: 12px;
   }
+}
+
+
+@media (max-width: 360px) {
+  .profile-page {
+    padding: 0 8px 80px;
+  }
+}
+
+@media (min-width: 481px) {
+  .profile-page {
+    max-width: 480px;
+  }
+}
+
+/* Touch improvements */
+@media (hover: none) and (pointer: coarse) {
+  .dashboard-item:active,
+  .nav-btn:active {
+    opacity: 0.7;
+  }
+}
+
+/* Focus styles for accessibility */
+.dashboard-item:focus,
+.nav-btn:focus,
+.btn-item:focus,
+.stat-item:focus {
+  outline: 2px solid #5FA85F;
+  outline-offset: 2px;
+}
+
+/* Prevent horizontal scroll and ensure proper containment */
+html, body {
+  overflow-x: hidden;
+  width: 100%;
+}
+
 </style>

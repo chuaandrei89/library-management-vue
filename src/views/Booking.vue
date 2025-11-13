@@ -1,9 +1,9 @@
 <template>
   <div class="container" role="main">
     <header>
-     <h3 class="title">Booking</h3>
+      <h3 class="title">Booking</h3>
       <NotificationBell />
-      <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+      <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
     </header>
 
     <!-- Date Section -->
@@ -41,105 +41,152 @@
     <!-- Time Slots Section -->
     <section class="time-slots-section">
       <div class="section-header">
-        <span>Time</span>
-        <span>Details</span>
+        <div class="header-left">
+          <span class="time-header">Time</span>
+          <span class="details-header">Details</span>
+        </div>
+        <button class="plus-btn" aria-label="Book a book" @click="bookABook">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 5v14M5 12h14" />
+          </svg>
+        </button>
       </div>
 
       <!-- Time Slot 1 -->
       <div class="time-slot">
-        <div class="time-range">
-          <span class="time">11:35</span>
-          <span class="time">13:05</span>
+        <div class="time-column">
+          <span class="time-start">11:35</span>
+          <span class="time-end">13:05</span>
         </div>
-        <div class="slot-details">
+        <div class="details-column">
           <div class="subject">Computer Science</div>
-          <div class="date-time">Mon, July ~ 13:35</div>
+          <div class="date-time">Mon. July ~ 13:35</div>
           <div class="location">
             <span class="location-icon">@</span>
-            <span>left Wing</span>
+            <span>Left Wing</span>
           </div>
           <div class="instructor">
             <span class="instructor-icon">🖢</span>
-            <span>Monn Lobba Khalid</span>
+            <span>Mam Loba Khalid</span>
           </div>
         </div>
       </div>
 
       <!-- Time Slot 2 -->
       <div class="time-slot">
-        <div class="time-range">
-          <span class="time">13:15</span>
-          <span class="time">14:45</span>
+        <div class="time-column">
+          <span class="time-start">13:15</span>
+          <span class="time-end">14:45</span>
         </div>
-        <div class="slot-details">
+        <div class="details-column">
           <div class="subject">History</div>
-          <div class="date-time">Mon, July ~ 13:15</div>
+          <div class="date-time">Mon. July ~ 13:15</div>
           <div class="location">
             <span class="location-icon">@</span>
             <span>Right Wing</span>
           </div>
           <div class="instructor">
             <span class="instructor-icon">🖢</span>
-            <span>Monn Hiro</span>
+            <span>Mam Hira</span>
           </div>
         </div>
       </div>
 
       <!-- Time Slot 3 -->
       <div class="time-slot">
-        <div class="time-range">
-          <span class="time">15:10</span>
-          <span class="time">16:40</span>
+        <div class="time-column">
+          <span class="time-start">15:10</span>
+          <span class="time-end">16:40</span>
         </div>
-        <div class="slot-details">
+        <div class="details-column">
           <div class="subject">Mathematics</div>
-          <div class="date-time">Mon, July ~ 15~10</div>
+          <div class="date-time">Mon. July ~ 15:10</div>
           <div class="location">
             <span class="location-icon">@</span>
-            <span>left Wing</span>
+            <span>Left Wing</span>
           </div>
         </div>
       </div>
     </section>
   </div>
 
-  <!-- Navigation Bar - UPDATED to match Lists page -->
+  <!-- Navigation Bar -->
   <nav class="bottom-nav" role="navigation" aria-label="Primary">
-    <button class="nav-btn" aria-label="Home" @click="navigate('')" type="button">
+    <!-- Home -->
+    <button
+      class="nav-btn"
+      :class="{ active: activeNav === 'home' }"
+      aria-label="Home"
+      type="button"
+      @click="navigate('home')"
+    >
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" class="nav-icon">
-        <path d="M3 9L12 2l9 7v11a1 1 0 01-1 1h-5v-6H9v6H4a1 1 0 01-1-1z"/>
+        <path d="M3 9L12 2l9 7v11a1 1 0 01-1 1h-5v-6H9v6H4a1 1 0 01-1-1z" />
       </svg>
-      <span>Home</span>
+      <span class="indicator" v-if="activeNav === 'home'" />
     </button>
-    <button class="nav-btn" aria-label="Genres" @click="navigate('genres')" type="button">
+
+    <!-- Genres -->
+    <button
+      class="nav-btn"
+      :class="{ active: activeNav === 'genres' }"
+      aria-label="Genres"
+      type="button"
+      @click="navigate('genres')"
+    >
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" class="nav-icon">
-        <rect x="3" y="4" width="18" height="16" rx="2" ry="2"/>
-        <line x1="3" y1="10" x2="21" y2="10"/>
-        <line x1="7" y1="4" x2="7" y2="20"/>
+        <rect x="3" y="4" width="18" height="16" rx="2" ry="2" />
+        <line x1="3" y1="10" x2="21" y2="10" />
+        <line x1="7" y1="4" x2="7" y2="20" />
       </svg>
-      <span>Genres</span>
+      <span class="indicator" v-if="activeNav === 'genres'" />
     </button>
-    <button class="nav-btn active" aria-current="page" aria-label="Booking" @click="navigate('booking')" type="button">
-      <svg viewBox="0 0 24 24" fill="none" stroke="#5FA85F" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" class="nav-icon active-icon">
-        <rect x="3" y="4" width="18" height="16" rx="2" ry="2"/>
-        <line x1="3" y1="10" x2="21" y2="10"/>
-        <line x1="8" y1="2" x2="8" y2="6"/>
-        <line x1="16" y1="2" x2="16" y2="6"/>
+
+    <!-- Booking -->
+    <button
+      class="nav-btn"
+      :class="{ active: activeNav === 'booking' }"
+      aria-current="page"
+      aria-label="Booking"
+      type="button"
+      @click="navigate('booking')"
+    >
+      <svg viewBox="0 0 24 24" fill="none" stroke="#5fa85f" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" class="nav-icon active-icon">
+        <rect x="3" y="4" width="18" height="16" rx="2" ry="2" />
+        <line x1="3" y1="10" x2="21" y2="10" />
+        <line x1="8" y1="2" x2="8" y2="6" />
+        <line x1="16" y1="2" x2="16" y2="6" />
       </svg>
-      <span class="active-label">Booking</span>
+      <span class="indicator" v-if="activeNav === 'booking'" />
     </button>
-    <button class="nav-btn" aria-label="Lists" @click="navigate('lists')" type="button">
+
+    <!-- Lists -->
+    <button
+      class="nav-btn"
+      :class="{ active: activeNav === 'lists' }"
+      aria-label="Lists"
+      type="button"
+      @click="navigate('lists')"
+    >
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" class="nav-icon">
         <path d="M8 6h8v2H8zM8 10h8v2H8zM8 14h8v2H8z" />
       </svg>
-      <span>Lists</span>
+      <span class="indicator" v-if="activeNav === 'lists'" />
     </button>
-    <button class="nav-btn" aria-label="Profile" @click="navigate('profile')" type="button">
+
+    <!-- Profile -->
+    <button
+      class="nav-btn"
+      :class="{ active: activeNav === 'profile' }"
+      aria-label="Profile"
+      type="button"
+      @click="navigate('profile')"
+    >
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" class="nav-icon">
         <circle cx="12" cy="7" r="4" />
         <path d="M5.5 21a6 6 0 0113 0" />
       </svg>
-      <span>Profile</span>
+      <span class="indicator" v-if="activeNav === 'profile'" />
     </button>
   </nav>
 </template>
@@ -149,50 +196,50 @@ import NotificationBell from './../components/NotificationBell.vue'
 
 export default {
   name: 'Booking',
-  components: {
-    NotificationBell
+  components: { NotificationBell },
+  data() {
+    return {
+      activeNav: 'booking',  // initial active nav
+    }
   },
   methods: {
     navigate(page) {
-      this.$router.push(`/${page}`);
-    }
-  }
+      this.activeNav = page || 'booking'
+      this.$router.push(`/${page}`)
+    },
+    bookABook() {
+      this.$router.push('/book-a-book')
+    },
+  },
 }
 </script>
 
 <style scoped>
-
 * {
   font-family: 'Poppins', sans-serif;
-}
-* {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
 }
 
-.title {
-  font-weight: 600;
-  font-size: 17px;
-  color: black;
-  margin: 0;
-}
 body {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
-    Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
   background: #fff;
   color: #000;
   line-height: 1.4;
+  display: flex;
+  justify-content: center;
 }
 
 /* Container */
 .container {
-  max-width: 100%;
+  max-width: 480px;
+  width: 100%;
   margin: 0 auto;
   padding: 0 16px 80px;
   min-height: 100vh;
 }
-/* Header - FIXED */
+
+/* Header */
 header {
   display: flex;
   justify-content: center;
@@ -201,13 +248,14 @@ header {
   position: relative;
   border-bottom: 1px solid #eee;
   margin-bottom: 20px;
+  width: 100%;
 }
 
-header h1 {
+.title {
   font-weight: 600;
-  font-size: clamp(18px, 5vw, 22px);
+  font-size: 17px;
+  color: black;
   margin: 0;
-  text-align: center;
 }
 
 /* Date Section */
@@ -224,7 +272,7 @@ header h1 {
 .date-number {
   font-size: 32px;
   font-weight: 700;
-  color:#80a42a;
+  color: #80a42a;
 }
 
 .month-year {
@@ -238,13 +286,15 @@ header h1 {
   margin-bottom: 24px;
 }
 
-.week-days, .week-dates {
+.week-days,
+.week-dates {
   display: flex;
   justify-content: space-between;
   padding: 0 4px;
 }
 
-.week-days span, .week-dates span {
+.week-days span,
+.week-dates span {
   width: 32px;
   height: 32px;
   display: flex;
@@ -264,7 +314,7 @@ header h1 {
 }
 
 .week-dates span.active {
-  background:#80a42a;
+  background: #80a42a;
   color: white;
 }
 
@@ -273,16 +323,48 @@ header h1 {
   display: flex;
   flex-direction: column;
   gap: 16px;
+  width: 100%;
 }
 
 .section-header {
   display: flex;
   justify-content: space-between;
+  align-items: center;
   padding: 0 16px;
   font-size: 14px;
   font-weight: 600;
   color: #666;
   margin-bottom: 8px;
+  width: 100%;
+}
+
+.header-left {
+  display: flex;
+  gap: 20px;
+}
+
+.time-header {
+  min-width: 70px;
+}
+
+.plus-btn {
+  background:  #136f13;
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: white;
+  transition: background-color 0.2s ease;
+}
+
+.plus-btn svg {
+  width: 20px;
+  height: 20px;
+  stroke: white;
 }
 
 .time-slot {
@@ -290,26 +372,29 @@ header h1 {
   border-radius: 12px;
   padding: 16px;
   display: flex;
-  gap: 16px;
+  gap: 20px;
   border: 1px solid #e0e0e0;
+  width: 100%;
 }
 
-.time-range {
+.time-column {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-start;
   gap: 4px;
-  min-width: 60px;
+  min-width: 70px;
 }
 
-.time {
+.time-start,
+.time-end {
   font-size: 14px;
   font-weight: 600;
   color: #333;
 }
 
-.slot-details {
+.details-column {
   flex: 1;
+  width: 100%;
 }
 
 .subject {
@@ -325,7 +410,8 @@ header h1 {
   margin-bottom: 8px;
 }
 
-.location, .instructor {
+.location,
+.instructor {
   display: flex;
   align-items: center;
   gap: 6px;
@@ -334,123 +420,109 @@ header h1 {
   margin-bottom: 4px;
 }
 
-.location-icon, .instructor-icon {
+.location-icon,
+.instructor-icon {
   font-size: 10px;
 }
 
-/* Navigation Bar - UPDATED to match Lists page */
+/* Navigation Bar */
 .bottom-nav {
   position: fixed;
-  bottom: 0;
+  bottom: 20px;
   left: 50%;
   transform: translateX(-50%);
-  max-width: 480px;
-  width: 100%;
   background: #fff;
-  border-top: 1px solid #ccc;
+  border-radius: 26px;
+  width: 360px;
+  height: 56px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.18);
   display: flex;
-  justify-content: space-around;
-  padding: 8px 0 14px;
-  box-shadow: 0 -1px 10px rgb(0 0 0 / 0.04);
-  z-index: 10;
+  justify-content: space-evenly;
+  padding: 0 20px;
+  z-index: 20;
 }
 
 .nav-btn {
+  position: relative;
   background: none;
   border: none;
-  color: #333;
-  font-size: 11px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 5px;
-  cursor: pointer;
-  font-weight: 500;
-  user-select: none;
+  color: #424242;
+  width: 48px;
+  height: 48px;
   padding: 0;
-  width: 56px;
-}
-
-.nav-btn:focus {
-  outline: 2px solid #5FA85F;
-  outline-offset: 2px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: color 0.3s ease;
 }
 
 .nav-btn .nav-icon {
-  width: 22px;
-  height: 22px;
-  stroke-width: 2;
+  width: 26px;
+  height: 26px;
   stroke: currentColor;
   fill: none;
 }
 
-.nav-btn.active,
-.nav-btn.active span,
-.nav-btn.active .active-icon {
-  color: #5FA85F;
-  font-weight: 700;
+.nav-btn.active {
+  color: #136f13;
 }
 
-.active-icon {
-  stroke: #5FA85F;
+.indicator {
+  position: absolute;
+  bottom: -8px;              /* lowered: negative half of semicircle’s height */
+  left: 50%;
+  transform: translateX(-50%);
+  width: 28px;
+  height: 14px;
+  background: #136f13;
+  border-radius: 14px 14px 0 0;
+  box-shadow: 0 3px 6px rgba(95, 168, 95, 0.4);
+  z-index: -1;
+  transition: all 0.3s ease;
 }
 
-.active-label {
-  color: #5FA85F;
-  font-weight: 700;
-}
-
-/* Your existing responsive design remains the same */
+/* Responsive */
 @media (max-width: 480px) {
-  .container {
-    padding: 0 12px 80px;
-  }
-
-  .time-slot {
-    padding: 14px;
-  }
-
   .bottom-nav {
-    padding: 6px 0 14px;
+    width: 100%;
+    max-width: 360px;
+    height: 48px;
+    padding: 0 12px;
+  }
+  .nav-btn {
+    width: 44px;
+    height: 44px;
+  }
+  .nav-btn .nav-icon {
+    width: 22px;
+    height: 22px;
+  }
+  .indicator {
+    bottom: -6;
+    width: 24px;
+    height: 12px;
   }
 }
+
+
 
 @media (max-width: 360px) {
   .container {
     padding: 0 8px 80px;
   }
-
   .time-slot {
     padding: 12px;
+    gap: 16px;
   }
-
   .date-number {
-    font-size: 28px;
+    font-size: 26px;
   }
-
   .nav-btn span {
     font-size: 9px;
   }
-}
-
-@media (min-width: 768px) {
-  .container {
-    max-width: 480px;
-    margin: 0 auto;
-  }
-
-  .bottom-nav {
-    max-width: 480px;
-    left: 50%;
-    transform: translateX(-50%);
-  }
-}
-
-/* Touch improvements */
-@media (hover: none) and (pointer: coarse) {
-  .time-slot:active,
-  .nav-btn:active {
-    opacity: 0.7;
+  .time-column {
+    min-width: 60px;
   }
 }
 </style>

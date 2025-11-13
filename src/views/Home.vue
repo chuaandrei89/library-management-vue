@@ -123,43 +123,83 @@
       </section>
     </div>
 
-    <!-- Bottom Navigation Bar - Matching Lists page style -->
+    <!-- Bottom Navigation Bar - Updated to match Booking page style -->
     <nav class="bottom-nav" role="navigation" aria-label="Primary">
-      <button class="nav-btn active" aria-current="page" aria-label="Home" @click="navigate('')" type="button">
-        <svg viewBox="0 0 24 24" fill="none" stroke="#5FA85F" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" class="nav-icon active-icon">
-          <path d="M3 9L12 2l9 7v11a1 1 0 01-1 1h-5v-6H9v6H4a1 1 0 01-1-1z"/>
-        </svg>
-        <span class="active-label">Home</span>
-      </button>
-      <button class="nav-btn" aria-label="Genres" @click="navigate('genres')" type="button">
+      <!-- Home -->
+      <button
+        class="nav-btn"
+        :class="{ active: activeNav === 'home' }"
+        aria-current="page"
+        aria-label="Home"
+        type="button"
+        @click="navigate('home')"
+      >
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" class="nav-icon">
-          <rect x="3" y="4" width="18" height="16" rx="2" ry="2"/>
-          <line x1="3" y1="10" x2="21" y2="10"/>
-          <line x1="7" y1="4" x2="7" y2="20"/>
+          <path d="M3 9L12 2l9 7v11a1 1 0 01-1 1h-5v-6H9v6H4a1 1 0 01-1-1z" />
         </svg>
-        <span>Genres</span>
+        <span class="indicator" v-if="activeNav === 'home'" />
       </button>
-      <button class="nav-btn" aria-label="Booking" @click="navigate('booking')" type="button">
+
+      <!-- Genres -->
+      <button
+        class="nav-btn"
+        :class="{ active: activeNav === 'genres' }"
+        aria-label="Genres"
+        type="button"
+        @click="navigate('genres')"
+      >
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" class="nav-icon">
-          <rect x="3" y="4" width="18" height="16" rx="2" ry="2"/>
-          <line x1="3" y1="10" x2="21" y2="10"/>
-          <line x1="8" y1="2" x2="8" y2="6"/>
-          <line x1="16" y1="2" x2="16" y2="6"/>
+          <rect x="3" y="4" width="18" height="16" rx="2" ry="2" />
+          <line x1="3" y1="10" x2="21" y2="10" />
+          <line x1="7" y1="4" x2="7" y2="20" />
         </svg>
-        <span>Booking</span>
+        <span class="indicator" v-if="activeNav === 'genres'" />
       </button>
-      <button class="nav-btn" aria-label="Lists" @click="navigate('lists')" type="button">
+
+      <!-- Booking -->
+      <button
+        class="nav-btn"
+        :class="{ active: activeNav === 'booking' }"
+        aria-label="Booking"
+        type="button"
+        @click="navigate('booking')"
+      >
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" class="nav-icon">
+          <rect x="3" y="4" width="18" height="16" rx="2" ry="2" />
+          <line x1="3" y1="10" x2="21" y2="10" />
+          <line x1="8" y1="2" x2="8" y2="6" />
+          <line x1="16" y1="2" x2="16" y2="6" />
+        </svg>
+        <span class="indicator" v-if="activeNav === 'booking'" />
+      </button>
+
+      <!-- Lists -->
+      <button
+        class="nav-btn"
+        :class="{ active: activeNav === 'lists' }"
+        aria-label="Lists"
+        type="button"
+        @click="navigate('lists')"
+      >
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" class="nav-icon">
           <path d="M8 6h8v2H8zM8 10h8v2H8zM8 14h8v2H8z" />
         </svg>
-        <span>Lists</span>
+        <span class="indicator" v-if="activeNav === 'lists'" />
       </button>
-      <button class="nav-btn" aria-label="Profile" @click="navigate('profile')" type="button">
+
+      <!-- Profile -->
+      <button
+        class="nav-btn"
+        :class="{ active: activeNav === 'profile' }"
+        aria-label="Profile"
+        type="button"
+        @click="navigate('profile')"
+      >
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" class="nav-icon">
           <circle cx="12" cy="7" r="4" />
           <path d="M5.5 21a6 6 0 0113 0" />
         </svg>
-        <span>Profile</span>
+        <span class="indicator" v-if="activeNav === 'profile'" />
       </button>
     </nav>
   </div>
@@ -176,6 +216,7 @@ export default {
   data() {
     return {
       activeTab: 'library',
+      activeNav: 'home',  // Added to track active nav button, matching Booking page
       categories: [
         {
           id: 1,
@@ -238,34 +279,52 @@ export default {
       console.log('Browse all books clicked');
     },
     navigate(page) {
+      this.activeNav = page || 'home';  // Updated to set activeNav before routing, matching Booking page
       this.$router.push(`/${page}`);
     }
   }
 }
 </script>
 
+
 <style scoped>
 * {
   font-family: 'Poppins', sans-serif;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
-.home-page {
+body {
   background: #fff;
-  max-width: 480px;
-  margin: 0 auto;
-  padding: 0 16px 70px;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
-    Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
   color: #000;
+  line-height: 1.4;
+  display: flex;
+  justify-content: center;
+  overflow-x: hidden;
 }
 
-/* Top Bar - Matching Lists page */
+/* Main container - FIXED to match navbar width */
+.home-page {
+  max-width: 480px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 0 16px 80px;
+  min-height: 100vh;
+  position: relative;
+  overflow-x: hidden;
+}
+
+/* Top Bar */
 .top-bar {
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 12px 0 8px;
+  padding: 16px 0;
   position: relative;
+  border-bottom: 1px solid #eee;
+  margin-bottom: 20px;
+  width: 100%;
 }
 
 .title {
@@ -280,6 +339,7 @@ export default {
   max-width: 100%;
   margin: 0 auto;
   padding: 0;
+  width: 100%;
 }
 
 /* Categories Section */
@@ -290,6 +350,7 @@ export default {
   gap: 12px;
   scrollbar-width: none;
   -ms-overflow-style: none;
+  width: 100%;
 }
 
 .categories::-webkit-scrollbar {
@@ -339,6 +400,7 @@ export default {
   padding-bottom: 12px;
   border-bottom: 1px solid #e0e0e0;
   margin: 24px 0 16px;
+  width: 100%;
 }
 
 .borrowed-header h2 {
@@ -361,6 +423,7 @@ export default {
   padding: 16px;
   margin-bottom: 24px;
   background: #fafafa;
+  width: 100%;
 }
 
 .borrowed-book h5 {
@@ -377,6 +440,7 @@ export default {
   justify-content: space-between;
   margin-bottom: 6px;
   flex-wrap: wrap;
+  width: 100%;
 }
 
 .borrowed-book-details span {
@@ -390,32 +454,41 @@ export default {
   margin-top: 4px;
 }
 
-/* Tabs Section */
+/* Tabs Section - UPDATED with green background for active tab */
 .tabs {
   display: flex;
   align-items: center;
   font-size: 17px;
   margin: 32px 0 20px;
-  gap: 16px;
+  gap: 8px;
+  width: 100%;
+  background: #f8f9fa;
+  padding: 4px;
+  border-radius: 30px;
 }
 
 .tab {
   cursor: pointer;
   font-weight: 600;
-  padding-bottom: 6px;
+  padding: 8px 16px;
   user-select: none;
   background: none;
   border: none;
   color: #666;
-  font-size: inherit;
+  font-size: 14px;
+  border-radius: 35px;
+  transition: all 0.2s ease;
+  flex: 1;
+  text-align: center;
 }
 
 .tab.active {
-  color: #2a9314;
-  border-bottom: 2px solid #2a9314;
+  color: white;
+  background: #2e9f17e1;
+  box-shadow: 0 2px 4px rgba(42, 147, 20, 0.3);
 }
 
-/* Cards */
+/* Cards - FIXED WIDTH */
 .card {
   background: #fff;
   box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
@@ -423,6 +496,7 @@ export default {
   padding: 20px;
   margin-bottom: 16px;
   border: 1px solid #f0f0f0;
+  width: 100%;
 }
 
 .card-header {
@@ -433,6 +507,7 @@ export default {
   justify-content: space-between;
   align-items: flex-start;
   gap: 12px;
+  width: 100%;
 }
 
 .card-date {
@@ -458,67 +533,201 @@ export default {
   font-size: 14px;
   line-height: 1.5;
   color: #555;
+  width: 100%;
 }
 
-/* Bottom Navigation Bar - Matching Lists page */
+/* Announcements Panel - FIXED WIDTH */
+#announcements {
+  width: 100%;
+  padding: 20px 0;
+}
+
+#announcements p {
+  font-size: 14px;
+  color: #555;
+  width: 100%;
+  text-align: center;
+}
+
+/* Navigation Bar - Updated to match Booking page style */
 .bottom-nav {
   position: fixed;
-  bottom: 0;
+  bottom: 20px;
   left: 50%;
   transform: translateX(-50%);
-  max-width: 480px;
-  width: 100%;
   background: #fff;
-  border-top: 1px solid #ccc;
+  border-radius: 26px;
+  width: 360px;
+  height: 56px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.18);
   display: flex;
-  justify-content: space-around;
-  padding: 8px 0 14px;
-  box-shadow: 0 -1px 10px rgb(0 0 0 / 0.04);
-  z-index: 10;
+  justify-content: space-evenly;
+  padding: 0 20px;
+  z-index: 20;
 }
 
 .nav-btn {
+  position: relative;
   background: none;
   border: none;
-  color: #333;
-  font-size: 11px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 5px;
-  cursor: pointer;
-  font-weight: 500;
-  user-select: none;
+  color: #424242;
+  width: 48px;
+  height: 48px;
   padding: 0;
-  width: 56px;
-}
-
-.nav-btn:focus {
-  outline: 2px solid #5FA85F;
-  outline-offset: 2px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: color 0.3s ease;
 }
 
 .nav-btn .nav-icon {
-  width: 22px;
-  height: 22px;
-  stroke-width: 2;
+  width: 26px;
+  height: 26px;
   stroke: currentColor;
   fill: none;
 }
 
-.nav-btn.active,
-.nav-btn.active span,
-.nav-btn.active .active-icon {
-  color: #5FA85F;
-  font-weight: 700;
+.nav-btn.active {
+  color: #136f13;
 }
 
-.active-icon {
-  stroke: #5FA85F;
+.indicator {
+  position: absolute;
+  bottom: -8px;              /* lowered: negative half of semicircle’s height */
+  left: 50%;
+  transform: translateX(-50%);
+  width: 28px;
+  height: 14px;
+  background: #136f13;
+  border-radius: 14px 14px 0 0;
+  box-shadow: 0 3px 6px rgba(95, 168, 95, 0.4);
+  z-index: -1;
+  transition: all 0.3s ease;
 }
 
-.active-label {
-  color: #5FA85F;
-  font-weight: 700;
+/* Fix: Match booking page active icon color */
+.nav-btn.active .nav-icon {
+  stroke:#136f13;
+}
+
+/* Responsive Design */
+@media (max-width: 480px) {
+  .home-page {
+    padding: 0 12px 80px;
+    max-width: 100%;
+  }
+
+  .card {
+    padding: 16px;
+  }
+
+  .card-header {
+    font-size: 15px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .card-date {
+    align-self: flex-start;
+  }
+
+  .bottom-nav {
+    width: 100%;
+    max-width: 360px;
+    height: 48px;
+    padding: 0 12px;
+  }
+
+  .nav-btn {
+    width: 44px;
+    height: 44px;
+  }
+
+  .nav-btn .nav-icon {
+    width: 22px;
+    height: 22px;
+  }
+
+  .indicator {
+    bottom: -6px;
+    width: 24px;
+    height: 12px;
+  }
+}
+
+@media (max-width: 360px) {
+  .home-page {
+    padding: 0 8px 80px;
+  }
+
+  .card {
+    padding: 14px;
+  }
+
+  .tabs {
+    font-size: 16px;
+    gap: 12px;
+  }
+
+  .bottom-nav {
+    width: 100%;
+    max-width: 360px;
+    height: 48px;
+    padding: 0 12px;
+  }
+
+  .nav-btn {
+    width: 44px;
+    height: 44px;
+  }
+
+  .nav-btn .nav-icon {
+    width: 22px;
+    height: 22px;
+  }
+
+  .indicator {
+    bottom: -6px;
+    width: 24px;
+    height: 12px;
+  }
+}
+
+@media (min-width: 481px) {
+  .home-page {
+    max-width: 480px;
+  }
+}
+
+/* Touch improvements */
+@media (hover: none) and (pointer: coarse) {
+  .tab:active,
+  .nav-btn:active,
+  .category-card:active,
+  .browse-all:active {
+    opacity: 0.7;
+  }
+}
+
+/* Focus styles for accessibility */
+.tab:focus,
+.card:focus,
+.nav-btn:focus,
+.category-card:focus {
+  outline: 2px solid #5FA85F;
+  outline-offset: 2px;
+}
+
+/* Remove focus outline from browse-all */
+.browse-all:focus {
+  outline: none;
+}
+
+/* Prevent horizontal scroll */
+html, body {
+  overflow-x: hidden;
+  width: 100%;
 }
 </style>

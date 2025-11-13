@@ -35,43 +35,118 @@
       </div>
     </main>
 
-    <!-- Bottom Navigation Bar -->
+    <!-- Bottom Navigation Bar - icons only with semicircle indicator -->
     <nav class="bottom-nav" role="navigation" aria-label="Primary">
-      <button class="nav-btn" aria-label="Home" @click="navigate('home')" type="button">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" class="nav-icon">
-          <path d="M3 9L12 2l9 7v11a1 1 0 01-1 1h-5v-6H9v6H4a1 1 0 01-1-1z"/>
+      <button
+        class="nav-btn"
+        :class="{ active: activeNav === 'home' }"
+        aria-label="Home"
+        type="button"
+        @click="navigate('home')"
+      >
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linejoin="round"
+          stroke-linecap="round"
+          class="nav-icon"
+        >
+          <path d="M3 9L12 2l9 7v11a1 1 0 01-1 1h-5v-6H9v6H4a1 1 0 01-1-1z" />
         </svg>
-        <span>Home</span>
+        <span class="indicator" v-if="activeNav === 'home'" />
       </button>
-      <button class="nav-btn" aria-label="Genres" @click="navigate('genres')" type="button">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" class="nav-icon">
-          <rect x="3" y="4" width="18" height="16" rx="2" ry="2"/>
-          <line x1="3" y1="10" x2="21" y2="10"/>
-          <line x1="7" y1="4" x2="7" y2="20"/>
+
+      <button
+        class="nav-btn"
+        :class="{ active: activeNav === 'genres' }"
+        aria-label="Genres"
+        type="button"
+        @click="navigate('genres')"
+      >
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linejoin="round"
+          stroke-linecap="round"
+          class="nav-icon"
+        >
+          <rect x="3" y="4" width="18" height="16" rx="2" ry="2" />
+          <line x1="3" y1="10" x2="21" y2="10" />
+          <line x1="7" y1="4" x2="7" y2="20" />
         </svg>
-        <span>Genres</span>
+        <span class="indicator" v-if="activeNav === 'genres'" />
       </button>
-      <button class="nav-btn" aria-label="Booking" @click="navigate('booking')" type="button">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" class="nav-icon">
-          <rect x="3" y="4" width="18" height="16" rx="2" ry="2"/>
-          <line x1="3" y1="10" x2="21" y2="10"/>
-          <line x1="8" y1="2" x2="8" y2="6"/>
-          <line x1="16" y1="2" x2="16" y2="6"/>
+
+      <button
+        class="nav-btn"
+        :class="{ active: activeNav === 'booking' }"
+        aria-label="Booking"
+        type="button"
+        @click="navigate('booking')"
+      >
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linejoin="round"
+          stroke-linecap="round"
+          class="nav-icon"
+        >
+          <rect x="3" y="4" width="18" height="16" rx="2" ry="2" />
+          <line x1="3" y1="10" x2="21" y2="10" />
+          <line x1="8" y1="2" x2="8" y2="6" />
+          <line x1="16" y1="2" x2="16" y2="6" />
         </svg>
-        <span>Booking</span>
+        <span class="indicator" v-if="activeNav === 'booking'" />
       </button>
-      <button class="nav-btn active" aria-current="page" aria-label="Lists" @click="navigate('lists')" type="button">
-        <svg viewBox="0 0 24 24" fill="none" stroke="#5FA85F" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" class="nav-icon active-icon">
+
+      <button
+        class="nav-btn"
+        :class="{ active: activeNav === 'lists' }"
+        aria-current="page"
+        aria-label="Lists"
+        type="button"
+        @click="navigate('lists')"
+      >
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="#5FA85F"
+          stroke-width="2"
+          stroke-linejoin="round"
+          stroke-linecap="round"
+          class="nav-icon active-icon"
+        >
           <path d="M8 6h8v2H8zM8 10h8v2H8zM8 14h8v2H8z" />
         </svg>
-        <span class="active-label">Lists</span>
+        <span class="indicator" v-if="activeNav === 'lists'" />
       </button>
-      <button class="nav-btn" aria-label="Profile" @click="navigate('profile')" type="button">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" class="nav-icon">
+
+      <button
+        class="nav-btn"
+        :class="{ active: activeNav === 'profile' }"
+        aria-label="Profile"
+        type="button"
+        @click="navigate('profile')"
+      >
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linejoin="round"
+          stroke-linecap="round"
+          class="nav-icon"
+        >
           <circle cx="12" cy="7" r="4" />
           <path d="M5.5 21a6 6 0 0113 0" />
         </svg>
-        <span>Profile</span>
+        <span class="indicator" v-if="activeNav === 'profile'" />
       </button>
     </nav>
   </div>
@@ -87,6 +162,7 @@ export default {
   },
   data() {
     return {
+      activeNav: 'lists', // Active nav
       selectedSemester: "1",
      books: [
   { category: "Computer Science", code: "TL", number: "2301" },
@@ -104,6 +180,7 @@ export default {
   },
   methods: {
   navigate(page) {
+    this.activeNav = page || 'lists'
     // Use Vue Router to navigate programmatically
     this.$router.push(`/${page}`);
   },
@@ -114,24 +191,41 @@ export default {
 <style scoped>
 * {
   font-family: 'Poppins', sans-serif;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
-.lists-page {
+body {
   background: #fff;
-  max-width: 480px;
-  margin: 0 auto;
-  padding: 0 16px 70px;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
-    Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
   color: #000;
+  line-height: 1.4;
+  display: flex;
+  justify-content: center;
+  overflow-x: hidden;
 }
 
+/* Main container - FIXED to match other pages */
+.lists-page {
+  max-width: 480px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 0 16px 80px;
+  min-height: 100vh;
+  position: relative;
+  overflow-x: hidden;
+}
+
+/* Top Bar - UPDATED to match Home page */
 .top-bar {
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 12px 0 8px;
+  padding: 16px 0;
   position: relative;
+  border-bottom: 1px solid #eee;
+  margin-bottom: 20px;
+  width: 100%;
 }
 
 .title {
@@ -149,6 +243,7 @@ export default {
   font-size: 13px;
   font-weight: 500;
   color: #000;
+  width: 100%;
 }
 
 .total-borrowed {
@@ -179,6 +274,7 @@ export default {
   max-height: 70vh;
   overflow-y: auto;
   padding: 24px 16px 32px;
+  width: 100%;
 }
 
 /* Scrollbar small and subtle */
@@ -199,13 +295,14 @@ export default {
   justify-content: space-between;
   align-items: center;
   padding: 8px 16px 8px 18px;
-  margin-bottom: 16px; /* Increased spacing between cards */
+  margin-bottom: 16px;
   font-weight: 600;
   font-size: 14px;
   user-select: none;
   cursor: default;
   box-shadow: 0 1px 4px rgb(0 0 0 / 0.07);
   min-height: 40px;
+  width: 100%;
 }
 
 .category-name {
@@ -221,8 +318,8 @@ export default {
   background: #fff;
   border: 1px solid #dbdbdb;
   border-radius: 10px 14px 14px 10px;
-  min-width: 70px; /* Even smaller */
-  padding: 6px 12px; /* Minimal padding */
+  min-width: 70px;
+  padding: 6px 12px;
   text-align: center;
   display: flex;
   flex-direction: column;
@@ -232,7 +329,7 @@ export default {
   color: #5E5E5E;
   font-size: 13px;
   font-weight: 600;
-  height: 30px; /* Compact height */
+  height: 30px;
 }
 
 .code {
@@ -249,64 +346,99 @@ export default {
   line-height: 0.9;
 }
 
+/* Bottom Navigation Bar - pill shaped with icons only and semicircle indicator */
 .bottom-nav {
   position: fixed;
-  bottom: 0;
+  bottom: 20px;
   left: 50%;
   transform: translateX(-50%);
-  max-width: 480px;
-  width: 100%;
   background: #fff;
-  border-top: 1px solid #ccc;
+  border-radius: 26px;
+  width: 360px;
+  height: 56px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.18);
   display: flex;
-  justify-content: space-around;
-  padding: 8px 0 14px;
-  box-shadow: 0 -1px 10px rgb(0 0 0 / 0.04);
-  z-index: 10;
+  justify-content: space-evenly;
+  padding: 0 20px;
+  z-index: 20;
 }
 
 .nav-btn {
+  position: relative;
   background: none;
   border: none;
   color: #333;
-  font-size: 11px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 5px;
-  cursor: pointer;
-  font-weight: 500;
-  user-select: none;
+  width: 48px;
+  height: 48px;
   padding: 0;
-  width: 56px;
-}
-
-.nav-btn:focus {
-  outline: 2px solid #5FA85F;
-  outline-offset: 2px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: color 0.3s ease;
 }
 
 .nav-btn .nav-icon {
-  width: 22px;
-  height: 22px;
-  stroke-width: 2;
+  width: 26px;
+  height: 26px;
   stroke: currentColor;
   fill: none;
 }
 
-.nav-btn.active,
-.nav-btn.active span,
-.nav-btn.active .active-icon {
-  color: #5FA85F;
-  font-weight: 700;
+.nav-btn.active {
+  color: #136f13;
 }
 
-.active-icon {
-  stroke: #5FA85F;
+/* Match Booking page active icon color */
+.nav-btn.active .nav-icon {
+  stroke: #136f13;
 }
 
-.active-label {
-  color: #5FA85F;
-  font-weight: 700;
+/* Semicircle indicator below active icon */
+.indicator {
+  position: absolute;
+  bottom: -8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 28px;
+  height: 14px;
+  background: #136f13;
+  border-radius: 14px 14px 0 0;
+  box-shadow: 0 3px 6px rgba(95, 168, 95, 0.4);
+  z-index: -1;
+  transition: all 0.3s ease;
+}
+
+/* Responsive Design */
+@media (max-width: 480px) {
+  .lists-page {
+    padding: 0 12px 80px;
+    max-width: 100%;
+  }
+  .nav-btn {
+    width: 44px;
+    height: 44px;
+  }
+  .nav-btn .nav-icon {
+    width: 22px;
+    height: 22px;
+  }
+  .indicator {
+    bottom: -6px;
+    width: 24px;
+    height: 12px;
+  }
+}
+
+@media (max-width: 360px) {
+  .lists-page {
+    padding: 0 8px 80px;
+  }
+}
+
+@media (min-width: 481px) {
+  .lists-page {
+    max-width: 480px;
+  }
 }
 </style>
