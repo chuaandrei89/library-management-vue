@@ -14,7 +14,7 @@
     <main class="container" role="main" aria-label="Profile Page Content">
       <section class="profile-header">
         <img
-          src="https://randomuser.me/api/portraits/women/68.jpg"
+          src="../assets/picture.jpg"
           alt="Profile picture of Crystal Sheen Abacajen"
           class="profile-pic"
         />
@@ -89,7 +89,7 @@
           role="button"
           tabindex="0"
           aria-label="Settings"
-          @click="goToSettings"
+          @click="showSettings = true"
         >
           <svg
             class="dashboard-icon"
@@ -169,6 +169,59 @@
       </section>
     </main>
 
+    <!-- Floating Settings Modal -->
+    <div v-if="showSettings" class="modal-overlay" @click="showSettings = false">
+      <div class="settings-modal" @click.stop>
+        <div class="settings-header">
+          <h3 class="settings-title">Settings</h3>
+          <button class="close-btn" @click="showSettings = false" aria-label="Close settings">
+            <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none">
+              <line x1="18" y1="6" x2="6" y2="18"></line>
+              <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
+          </button>
+        </div>
+        <div class="settings-content">
+          <div class="settings-item" @click="editProfile">
+            <div class="settings-icon">
+              <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none">
+                <path d="M20 14.66V20a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h5.34"></path>
+                <polygon points="18 2 22 6 12 16 8 16 8 12 18 2"></polygon>
+              </svg>
+            </div>
+            <span>Edit Profile</span>
+          </div>
+          <div class="settings-item" @click="changePassword">
+            <div class="settings-icon">
+              <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none">
+                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+              </svg>
+            </div>
+            <span>Change Password</span>
+          </div>
+          <div class="settings-item" @click="notificationSettings">
+            <div class="settings-icon">
+              <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none">
+                <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+                <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+              </svg>
+            </div>
+            <span>Notification Settings</span>
+          </div>
+          <div class="settings-item" @click="dataPrivacy">
+            <div class="settings-icon">
+              <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none">
+                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+              </svg>
+            </div>
+            <span>Data Privacy Policy</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <!-- Bottom Navigation Bar - icons only with semicircle indicator -->
     <nav class="bottom-nav" role="navigation" aria-label="Primary">
       <button
@@ -239,29 +292,29 @@
         <span class="indicator" v-if="activeNav === 'booking'" />
       </button>
 
-          <button
-      class="nav-btn"
-      :class="{ active: activeNav === 'lists' }"
-      aria-label="Lists"
-      type="button"
-      @click="navigate('lists')"
-    >
-      <svg
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        stroke-width="2"
-        stroke-linejoin="round"
-        stroke-linecap="round"
-        class="nav-icon"
+      <button
+        class="nav-btn"
+        :class="{ active: activeNav === 'lists' }"
+        aria-label="Lists"
+        type="button"
+        @click="navigate('lists')"
       >
-        <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" />
-        <path
-          d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"
-        />
-      </svg>
-      <span class="indicator" v-if="activeNav === 'lists'" />
-    </button>
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linejoin="round"
+          stroke-linecap="round"
+          class="nav-icon"
+        >
+          <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" />
+          <path
+            d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"
+          />
+        </svg>
+        <span class="indicator" v-if="activeNav === 'lists'" />
+      </button>
 
       <button
         class="nav-btn"
@@ -300,14 +353,12 @@ export default {
   data() {
     return {
       activeNav: 'profile', // Active nav
+      showSettings: false
     }
   },
   methods: {
     clearProfile() {
       console.log('Clear clicked');
-    },
-    goToSettings() {
-      this.$router.push('/settings');
     },
     goToFavorites() {
       this.$router.push('/favorites');
@@ -319,6 +370,22 @@ export default {
     navigate(page) {
       this.activeNav = page || 'profile'
       this.$router.push(`/${page}`)
+    },
+    editProfile() {
+      console.log('Edit Profile clicked');
+      // Navigate to edit profile page
+    },
+    changePassword() {
+      console.log('Change Password clicked');
+      // Navigate to change password page
+    },
+    notificationSettings() {
+      console.log('Notification Settings clicked');
+      // Navigate to notification settings page
+    },
+    dataPrivacy() {
+      console.log('Data Privacy Policy clicked');
+      // Navigate to data privacy policy page
     }
   },
 };
@@ -392,6 +459,7 @@ body {
   height: 56px;
   border-radius: 50%;
   object-fit: cover;
+  border: 2px solid #5FA85F;
 }
 
 .profile-info {
@@ -590,6 +658,102 @@ svg.stat-icon {
   fill: none;
 }
 
+/* Floating Settings Modal Styles */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  padding: 20px;
+}
+
+.settings-modal {
+  background: white;
+  border-radius: 16px;
+  width: 100%;
+  max-width: 400px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  overflow: hidden;
+  animation: modal-appear 0.3s ease-out;
+}
+
+@keyframes modal-appear {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.settings-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 20px;
+  border-bottom: 1px solid #eee;
+}
+
+.settings-title {
+  font-weight: 600;
+  font-size: 18px;
+  margin: 0;
+  color: #000;
+}
+
+.close-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #666;
+  padding: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: background-color 0.2s;
+}
+
+.close-btn:hover {
+  background-color: #f0f0f0;
+}
+
+.settings-content {
+  padding: 8px 0;
+}
+
+.settings-item {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 20px;
+  cursor: pointer;
+  transition: background-color 0.15s ease-in-out;
+  font-weight: 500;
+  font-size: 15px;
+}
+
+.settings-item:hover {
+  background-color: #f5f5f5;
+}
+
+.settings-icon {
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #5fa85f;
+}
+
 .bottom-nav {
   position: fixed;
   bottom: 20px;
@@ -675,6 +839,11 @@ svg.stat-icon {
     width: 24px;
     height: 12px;
   }
+
+  .settings-modal {
+    max-width: 100%;
+    margin: 0 16px;
+  }
 }
 
 @media (max-width: 360px) {
@@ -699,7 +868,6 @@ svg.stat-icon {
   }
 }
 
-
 @media (max-width: 360px) {
   .profile-page {
     padding: 0 8px 80px;
@@ -715,7 +883,8 @@ svg.stat-icon {
 /* Touch improvements */
 @media (hover: none) and (pointer: coarse) {
   .dashboard-item:active,
-  .nav-btn:active {
+  .nav-btn:active,
+  .settings-item:active {
     opacity: 0.7;
   }
 }
@@ -724,7 +893,9 @@ svg.stat-icon {
 .dashboard-item:focus,
 .nav-btn:focus,
 .btn-item:focus,
-.stat-item:focus {
+.stat-item:focus,
+.settings-item:focus,
+.close-btn:focus {
   outline: 2px solid #5FA85F;
   outline-offset: 2px;
 }
@@ -734,5 +905,4 @@ html, body {
   overflow-x: hidden;
   width: 100%;
 }
-
 </style>

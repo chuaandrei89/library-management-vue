@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <img
-      src="https://upload.wikimedia.org/wikipedia/commons/4/45/Book_icon_green.svg"
+      src="../assets/book.png"
       alt="Logo"
       class="logo"
     />
@@ -138,8 +138,10 @@ export default {
 }
 
 .logo {
-  height: 32px;
+  height: 48px;
+  width: 48px; /* Add width to make it square */
   margin-bottom: 24px;
+  object-fit: contain; /* Ensures image scales properly */
 }
 
 .welcome-text {
