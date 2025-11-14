@@ -14,42 +14,42 @@
       <div class="notification-badge" aria-hidden="true">1</div>
     </div>
 
-    <!-- Notification Overlay Panel -->
+    <!-- Notification Overlay and Panel -->
     <div v-if="showNotifications" class="notifications-overlay">
-      <div class="notifications-panel">
-        <div class="notifications-header">
-          <h4>Notifications</h4>
-          <button @click="toggleNotifications" class="close-btn">&times;</button>
-        </div>
+      <!-- Dark gray background overlay -->
+      <div class="overlay-background" @click="toggleNotifications"></div>
 
+      <!-- Centered Notification Panel -->
+      <div class="notifications-panel" role="alert" aria-live="polite">
         <div class="notification-content">
+          <p><strong>Dear CRYSTAL,</strong></p>
+
           <p>
-            This is a reminder from CSU HERO Library that you have two books that have not yet been returned:
+            This is a reminder from [Library Name] that you have two books that have not yet been returned:
           </p>
 
           <ul class="book-list">
-            <li><strong>HISTORY</strong> — Due: 10/8/2025</li>
-            <li><strong>SCIENCE</strong> — Due: 10/8/2025</li>
+            <li>HISTORY — Due: 10/9/2025</li>
+            <li>SCIENCE — Due: 10/8/2025</li>
           </ul>
 
           <p>
-            Please return these books as soon as possible. Failure to do so may result in your clearance being placed on hold until the items are returned.
+            Please return those books as soon as possible. Failure to do so may result in your clearance being placed on hold until the items are returned.
           </p>
 
           <p>
-            If you have already returned the books, kindly disregard this notice. For any concerns or questions, you may contact us at esulib@gmail.com
+            If you have already returned the books, kindly disregard this notice. For any concerns or questions, you may contact us at csulib@gmail.com
           </p>
 
-          <p class="thank-you">Thank you for your prompt attention.</p>
+          <p>Thank you for your prompt attention.</p>
 
           <div class="signature">
-            <p><strong>Sincerely,</strong></p>
-            <p><strong>Andrei O. Chua</strong></p>
+            <p>Sincerely,</p>
+            <p>Andrei O. Chua</p>
             <p>Library HERO Learning</p>
-            <p>Ampayan Butuan City | 123346678912</p>
+            <p>Ampayan Butuan City | 123345678912</p>
           </div>
         </div>
-
       </div>
     </div>
   </div>
@@ -116,111 +116,106 @@ export default {
   align-items: center;
 }
 
-/* Overlay Background */
+/* Overlay container */
 .notifications-overlay {
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(0, 0, 0, 0.5);
-  z-index: 1000;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 20px;
+  z-index: 999;
+  padding: 0;
 }
 
-/* Notification Panel */
+/* Dark gray background overlay */
+.overlay-background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.6); /* Dark gray background */
+  z-index: 999;
+  pointer-events: auto; /* Enable clicks to close */
+}
+
+/* Centered Notification Panel */
 .notifications-panel {
-  background: white;
-  border-radius: 12px;
-  width: 100%;
+  background-color: #144d14; /* Dark green background */
+  color: #d4f8d4; /* Light green text */
+  border-radius: 20px;
+  width: 90%;
   max-width: 400px;
+  padding: 24px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+  font-size: 14px;
+  line-height: 1.5;
+  overflow-y: auto;
+  animation: slideIn 0.3s ease;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1000; /* Higher than overlay */
+  pointer-events: auto; /* enable panel clicks */
   max-height: 80vh;
   overflow-y: auto;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
-  animation: slideDown 0.3s ease;
 }
 
-@keyframes slideDown {
+@keyframes slideIn {
   from {
     opacity: 0;
-    transform: translateY(-20px);
+    transform: translate(-50%, -40%);
   }
   to {
     opacity: 1;
-    transform: translateY(0);
+    transform: translate(-50%, -50%);
   }
 }
 
-.notifications-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 16px 20px;
-  border-bottom: 1px solid #f0f0f0;
+.notification-content p,
+.notification-content ul {
+  color: #d4f8d4;
+  margin-bottom: 12px;
 }
 
-.notifications-header h4 {
-  margin: 0;
-  font-weight: 600;
-  color: #333;
-  font-size: 18px;
-}
-
-.close-btn {
-  background: none;
-  border: none;
-  font-size: 24px;
-  cursor: pointer;
-  color: #666;
-  padding: 0;
-  width: 30px;
-  height: 30px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 50%;
-}
-
-.close-btn:hover {
-  background: #f5f5f5;
-}
-
-.notification-content {
-  padding: 20px;
-}
-
-.notification-content p {
-  margin-bottom: 16px;
-  font-size: 14px;
-  color: #333;
-  line-height: 1.6;
+.notification-content strong {
+  color: #a4d4a4;
+  font-weight: 700;
 }
 
 .book-list {
-  margin: 16px 0;
+  list-style-type: disc;
   padding-left: 20px;
+  margin-bottom: 12px;
 }
 
 .book-list li {
   margin-bottom: 8px;
-  font-size: 14px;
-  color: #333;
-}
-
-.thank-you {
-  margin-top: 20px !important;
-  font-weight: 500;
-}
-
-.signature {
-  margin-top: 24px;
+  font-weight: 600;
+  color: #d4f8d4;
 }
 
 .signature p {
   margin-bottom: 4px;
+  font-weight: 500;
 }
 
+/* Responsive design */
+@media (max-width: 480px) {
+  .notifications-panel {
+    width: 85%;
+    max-width: 350px;
+    padding: 20px;
+  }
+}
+
+@media (max-width: 360px) {
+  .notifications-panel {
+    width: 80%;
+    max-width: 300px;
+    padding: 16px;
+    font-size: 13px;
+  }
+}
 </style>

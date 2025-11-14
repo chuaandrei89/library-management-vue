@@ -122,32 +122,35 @@
           stroke-linecap="round"
           class="nav-icon active-icon"
         >
-          <path d="M8 6h8v2H8zM8 10h8v2H8zM8 14h8v2H8z" />
+          <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" />
+          <path
+            d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"
+          />
         </svg>
         <span class="indicator" v-if="activeNav === 'lists'" />
       </button>
 
       <button
-        class="nav-btn"
-        :class="{ active: activeNav === 'profile' }"
-        aria-label="Profile"
-        type="button"
-        @click="navigate('profile')"
-      >
-        <svg
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="2"
-          stroke-linejoin="round"
-          stroke-linecap="round"
-          class="nav-icon"
-        >
-          <circle cx="12" cy="7" r="4" />
-          <path d="M5.5 21a6 6 0 0113 0" />
-        </svg>
-        <span class="indicator" v-if="activeNav === 'profile'" />
-      </button>
+  class="nav-btn"
+  :class="{ active: activeNav === 'profile' }"
+  aria-label="Profile"
+  type="button"
+  @click="navigate('profile')"
+>
+  <svg
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="2"
+    stroke-linejoin="round"
+    stroke-linecap="round"
+    class="nav-icon"
+  >
+    <circle cx="12" cy="7" r="4" />
+    <path d="M5.5 21a6 6 0 0113 0" />
+  </svg>
+  <span class="indicator" v-if="activeNav === 'profile'" />
+</button>
     </nav>
   </div>
 </template>
