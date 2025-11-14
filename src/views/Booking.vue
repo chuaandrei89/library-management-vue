@@ -51,7 +51,7 @@
         <button
           class="plus-btn"
           aria-label="Book a book"
-          @click="showBookForm = true"
+          @click="openBookForm"
         >
           <svg
             viewBox="0 0 24 24"
@@ -121,38 +121,47 @@
       </div>
     </section>
 
-    <!-- Book a Book Form Overlay -->
+    <!-- Book a Book Form Modal Overlay -->
     <div
       v-if="showBookForm"
       class="modal-overlay"
-      @click="showBookForm = false"
+      @click="closeBookForm"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="booking-form-title"
     >
       <div class="modal-content" @click.stop>
         <div class="modal-header">
-          <h2>Book a Book</h2>
-          <button class="close-btn" @click="showBookForm = false">×</button>
+          <h2 id="booking-form-title">Book a Book</h2>
+          <button class="close-btn" @click="closeBookForm" aria-label="Close booking form">×</button>
         </div>
-        <div class="book-form">
+        <form class="book-form" @submit.prevent="confirmBooking" novalidate>
           <div class="form-group">
-            <label>Book Title</label>
+            <label for="bookTitleInput">Book Title</label>
             <input
+              id="bookTitleInput"
               type="text"
               v-model="bookTitle"
               placeholder="Enter book title"
+              required
+              aria-required="true"
             />
           </div>
           <div class="form-group">
-            <label>Author</label>
+            <label for="bookAuthorInput">Author</label>
             <input
+              id="bookAuthorInput"
               type="text"
               v-model="bookAuthor"
               placeholder="Enter author name"
+              required
+              aria-required="true"
             />
           </div>
           <div class="form-group">
-            <label>Genre</label>
-            <select v-model="selectedGenre">
-              <option value="">Select Genre</option>
+            <label for="genreSelect">Genre</label>
+            <select id="genreSelect" v-model="selectedGenre" required aria-required="true">
+              <option disabled value="">Select Genre</option>
               <option value="ai">AI</option>
               <option value="programming">Programming</option>
               <option value="fiction">Fiction</option>
@@ -160,24 +169,77 @@
             </select>
           </div>
           <div class="form-group">
-            <label>Pickup Date</label>
-            <input type="date" v-model="pickupDate" />
+            <label for="pickupDateInput">Pickup Date</label>
+            <input
+              id="pickupDateInput"
+              type="date"
+              v-model="pickupDate"
+              required
+              aria-required="true"
+            />
           </div>
           <div class="form-group">
-            <label>Notes (Optional)</label>
+            <label for="notesInput">Notes (Optional)</label>
             <textarea
+              id="notesInput"
               v-model="notes"
               placeholder="Add any special requests or remarks"
             ></textarea>
           </div>
           <div class="form-actions">
-            <button class="cancel-btn" @click="showBookForm = false">
-              Cancel
-            </button>
-            <button class="confirm-btn" @click="confirmBooking">
-              Confirm Booking
-            </button>
+            <button type="button" class="cancel-btn" @click="closeBookForm">Cancel</button>
+            <button type="submit" class="confirm-btn">Confirm Booking</button>
           </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- Booking Confirmation Modal Overlay -->
+    <div
+      v-if="showConfirmation"
+      class="modal-overlay"
+      @click="closeConfirmation"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="booking-confirmation-title"
+    >
+      <div class="modal-content" @click.stop>
+        <div class="confirmation-container" role="alert" aria-live="polite">
+          <div class="checkmark-circle" aria-hidden="true">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="checkmark-icon"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="white"
+              stroke-width="3"
+            >
+              <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+            </svg>
+          </div>
+          <div class="confirmation-details">
+            <div class="booking-date">
+              <svg xmlns="http://www.w3.org/2000/svg" class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
+                <line x1="16" y1="2" x2="16" y2="6" />
+                <line x1="8" y1="2" x2="8" y2="6" />
+                <line x1="3" y1="10" x2="21" y2="10" />
+              </svg>
+              <span>{{ formattedPickupDate }}</span>
+            </div>
+            <div class="booking-time">
+              <svg xmlns="http://www.w3.org/2000/svg" class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                <circle cx="12" cy="12" r="10" />
+                <path d="M12 6v6l4 2" />
+              </svg>
+              <span>{{ bookingStartTime }} – {{ bookingEndTime }}</span>
+            </div>
+          </div>
+          <h3 class="thank-you">Thank you!</h3>
+          <p class="confirmation-message">
+            Your booking is complete. An email with the details of your booking has been sent to you.
+          </p>
+          <button class="close-confirmation-btn" @click="closeConfirmation" aria-label="Close confirmation">Close</button>
         </div>
       </div>
     </div>
@@ -258,7 +320,7 @@
     </button>
 
     <!-- Lists -->
-        <button
+    <button
       class="nav-btn"
       :class="{ active: activeNav === 'lists' }"
       aria-label="Lists"
@@ -312,40 +374,58 @@ import NotificationBell from "./../components/NotificationBell.vue";
 
 export default {
   name: "Booking",
-  components: {
-    NotificationBell,
-  },
+  components: { NotificationBell },
   data() {
     return {
       activeNav: "booking",
       showBookForm: false,
+      showConfirmation: false,
       bookTitle: "",
       bookAuthor: "",
       selectedGenre: "",
       pickupDate: "",
       notes: "",
+      bookingStartTime: "4:30 PM",
+      bookingEndTime: "5:00 PM",
     };
+  },
+  computed: {
+    formattedPickupDate() {
+      if (!this.pickupDate) return "";
+      const d = new Date(this.pickupDate);
+      return d.toLocaleDateString(undefined, {
+        day: "numeric",
+        month: "long",
+        year: "numeric",
+      });
+    },
   },
   methods: {
     navigate(page) {
       this.activeNav = page || "booking";
       this.$router.push(`/${page}`);
     },
-    confirmBooking() {
-      // Handle booking confirmation
-      console.log("Booking confirmed:", {
-        title: this.bookTitle,
-        author: this.bookAuthor,
-        genre: this.selectedGenre,
-        pickupDate: this.pickupDate,
-        notes: this.notes,
-      });
-
-      // Show success message and close form
-      alert("Book reservation confirmed!");
+    openBookForm() {
+      this.showBookForm = true;
+    },
+    closeBookForm() {
       this.showBookForm = false;
-
-      // Reset form
+    },
+    confirmBooking() {
+      if (
+        !this.bookTitle.trim() ||
+        !this.bookAuthor.trim() ||
+        !this.selectedGenre ||
+        !this.pickupDate
+      ) {
+        alert("Please fill out all required fields.");
+        return;
+      }
+      this.showBookForm = false;
+      this.showConfirmation = true;
+    },
+    closeConfirmation() {
+      this.showConfirmation = false;
       this.bookTitle = "";
       this.bookAuthor = "";
       this.selectedGenre = "";
@@ -357,6 +437,7 @@ export default {
 </script>
 
 <style scoped>
+/* All your existing styles plus confirmation modal button styles */
 * {
   font-family: "Poppins", sans-serif;
   box-sizing: border-box;
@@ -372,7 +453,6 @@ body {
   justify-content: center;
 }
 
-/* Container */
 .container {
   max-width: 480px;
   width: 100%;
@@ -592,15 +672,16 @@ header {
   max-width: 500px;
   max-height: 90vh;
   overflow-y: auto;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  box-sizing: border-box;
+  padding: 24px 30px;
 }
 
+/* Modal Header */
 .modal-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 20px;
-  border-bottom: 1px solid #eee;
+  margin-bottom: 24px;
 }
 
 .modal-header h2 {
@@ -612,9 +693,10 @@ header {
 .close-btn {
   background: none;
   border: none;
-  font-size: 24px;
+  font-size: 28px;
   cursor: pointer;
   color: #666;
+  line-height: 1;
   padding: 0;
   width: 30px;
   height: 30px;
@@ -627,72 +709,158 @@ header {
   color: #333;
 }
 
+/* Book Form */
 .book-form {
-  padding: 20px;
-}
-
-.form-group {
-  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
 }
 
 .form-group label {
-  display: block;
-  margin-bottom: 8px;
-  font-weight: 500;
+  font-weight: 600;
+  font-size: 0.95rem;
   color: #333;
+  margin-bottom: 6px;
 }
 
 .form-group input,
 .form-group select,
 .form-group textarea {
-  width: 100%;
-  padding: 12px;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  font-size: 14px;
   font-family: inherit;
-}
-
-.form-group textarea {
-  min-height: 80px;
+  font-size: 1rem;
+  padding: 12px 14px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
   resize: vertical;
+  width: 100%;
+  box-sizing: border-box;
+  transition: border-color 0.3s ease;
 }
 
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+  border-color: #136f13;
+  outline: none;
+  box-shadow: 0 0 8px #98c22daa;
+}
+
+/* Form Actions */
 .form-actions {
   display: flex;
-  gap: 12px;
   justify-content: flex-end;
-  margin-top: 24px;
+  gap: 12px;
+  margin-top: 12px;
 }
 
 .cancel-btn,
 .confirm-btn {
-  padding: 12px 24px;
+  padding: 12px 28px;
+  border-radius: 20px;
+  font-weight: 600;
+  font-size: 1rem;
   border: none;
-  border-radius: 8px;
-  font-size: 14px;
-  font-weight: 500;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: background-color 0.3s ease;
 }
 
 .cancel-btn {
-  background: #f8f9fa;
-  color: #666;
-  border: 1px solid #ddd;
+  background-color: #f0f0f0;
+  color: #444;
 }
 
 .cancel-btn:hover {
-  background: #e9ecef;
+  background-color: #ddd;
 }
 
 .confirm-btn {
-  background: #136f13;
+  background-color: #136f13;
   color: white;
 }
 
 .confirm-btn:hover {
-  background: #0d5a0d;
+  background-color: #0f5c10;
+}
+
+/* Confirmation Modal Content */
+.confirmation-container {
+  max-width: 320px;
+  margin: 0 auto 0;
+  text-align: center;
+  user-select: none;
+  color: #345f26;
+}
+
+.checkmark-circle {
+  background-color: #345f26;
+  border-radius: 50%;
+  width: 52px;
+  height: 52px;
+  margin: 0 auto 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.checkmark-icon {
+  stroke: white;
+  width: 28px;
+  height: 28px;
+}
+
+.confirmation-details {
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  font-weight: 600;
+  font-size: 14px;
+  margin-bottom: 24px;
+}
+
+.booking-date,
+.booking-time {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.icon {
+  width: 20px;
+  height: 20px;
+  stroke: #345f26;
+}
+
+.thank-you {
+  font-weight: 700;
+  font-size: 16px;
+  margin-bottom: 6px;
+}
+
+.confirmation-message {
+  font-weight: 500;
+  font-size: 13px;
+  line-height: 1.4;
+  padding: 0 8px 24px 8px;
+}
+
+/* Confirmation close button */
+.close-confirmation-btn {
+  background-color: #345f26;
+  padding: 10px 24px;
+  border-radius: 14px;
+  color: white;
+  border: none;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  box-shadow: 0 3px 8px rgb(52 95 38 / 0.5);
+  transition: background-color 0.3s ease;
+  display: block;
+  margin: 0 auto;
+}
+
+.close-confirmation-btn:hover {
+  background-color: #27441b;
 }
 
 /* Navigation Bar */

@@ -145,7 +145,7 @@ export default {
   color: #d4f8d4; /* Light green text */
   border-radius: 20px;
   width: 90%;
-  max-width: 400px;
+  max-width: 300px;
   padding: 24px;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
   font-size: 14px;
